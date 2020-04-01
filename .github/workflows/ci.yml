@@ -1,7 +1,7 @@
 name: CI
 
 env:
-  DEFAULT_BRANCH: 'refs/heads/at-*'
+  DEFAULT_BRANCH: 'refs/heads/at-'
   GRADLE_VERSION: '5.6.4'
 
 on:
@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    if: github.head_ref != 'at-*'
+    if: startWith(github.head_ref, 'at-') == false
     runs-on: ubuntu-latest
 
     steps:
@@ -51,7 +51,7 @@ jobs:
             ${{ runner.os }}-gradle-${{ env.GRADLE_VERSION }}-
 
       - name: Build
-        if: github.ref == env.DEFAULT_BRANCH
+        if: startsWith(github.ref, env.DEFAULT_BRANCH) == true
         run: ./gradlew assembleDebug
 
       - name: Run detekt
