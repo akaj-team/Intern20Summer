@@ -1,4 +1,4 @@
-package com.example.intern20summer1
+package com.asiantech.intern20summer1
 
 import org.junit.Test
 
