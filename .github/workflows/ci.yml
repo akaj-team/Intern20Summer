@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    if: github.head_ref != 'develop'
+    if: github.head_ref != 'at-*'
     runs-on: ubuntu-latest
 
     steps:
