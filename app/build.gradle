@@ -7,7 +7,7 @@ android {
     buildToolsVersion "29.0.2"
 
     defaultConfig {
-        applicationId "com.example.intern20summer1"
+        applicationId "com.example.intern20summer"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
@@ -20,6 +20,21 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable true
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            applicationIdSuffix ".debug"
+        }
+
+        flavorDimensions "at-name"
+        productFlavors {
+            'at-quynhho' {
+                dimension "at-name"
+                applicationIdSuffix ".quynhho"
+            }
         }
     }
 
