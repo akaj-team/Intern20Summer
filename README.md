@@ -18,7 +18,7 @@ at-quynhho
 
 ### 3. Rule khi tạo branch và commit
 - Mỗi nhánh các bạn đặt tên theo cú pháp sau: `feature/<ten>/<yyyymmdd>-<tên bài tập>`.  
-	Ví dụ : `feature/at-tainguyen/20190711-layout_login`
+	Ví dụ : `feature/at-hoahoang/20200401-layout_login`
 - Mỗi commit đặt tên có ý nghĩa và có comment nội dung bên trong (qui định chung khi làm việc với git)
 - Ngoại trừ file `app/build.gradle` tất cả các file changed đều phải nằm trong thư mục tên của mình
 
