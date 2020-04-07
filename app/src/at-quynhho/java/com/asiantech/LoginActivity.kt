@@ -1,12 +1,13 @@
-package com.asiantech.summer
+package com.asiantech
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.asiantech.summer.R
 
-class CheckEmailActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_check_email)
+        setContentView(R.layout.activity_login)
     }
 }
