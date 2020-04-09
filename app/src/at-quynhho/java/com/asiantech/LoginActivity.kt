@@ -1,17 +1,13 @@
 package com.asiantech
 
 import Login
-import Login.EMAIL
-import Login.PASSW
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import com.asiantech.summer.R
 import kotlinx.android.synthetic.`at-quynhho`.activity_login.*
-import kotlinx.android.synthetic.`at-quynhho`.activity_main.*
 
 class LoginActivity : AppCompatActivity() {
 

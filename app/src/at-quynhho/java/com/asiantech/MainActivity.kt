@@ -1,8 +1,6 @@
 package com.asiantech
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.asiantech.summer.R
 import kotlinx.android.synthetic.`at-quynhho`.activity_main.*
