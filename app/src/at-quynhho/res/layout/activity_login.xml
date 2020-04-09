@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,30 +7,30 @@
     tools:context="com.asiantech.LoginActivity">
 
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/ic_background_edittop">
-
-    <TextView
-        android:id="@+id/tvBgSignin"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/sign_in"
-        android:textColor="@color/colorWhite"
-        android:textSize="30sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="550dp"
-        android:background="@drawable/ic_background_editbottom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvBgSignin"
-        android:layout_marginTop="90dp">
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_background_edittop">
+
+        <TextView
+            android:id="@+id/tvBgSignin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/sign_in"
+            android:textColor="@color/colorWhite"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="550dp"
+            android:layout_marginTop="90dp"
+            android:background="@drawable/ic_background_editbottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvBgSignin">
 
 
             <TextView
@@ -185,7 +184,7 @@
                 app:layout_constraintTop_toTopOf="@id/tvpass"
                 tools:ignore="HardcodedText" />
 
-            <TextView
+            <Button
                 android:id="@+id/tvbutton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
