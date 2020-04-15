@@ -2,6 +2,7 @@ package com.asiantech.summer.layoutfragment
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+
 @Parcelize
 class UserProfile(
     var avatar: String,
