@@ -1,0 +1,75 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.asiantech.summer.fragmentLayout.MenuMessageFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/colorGreyLight"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:id="@+id/tvMessages"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/messages"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.arlib.floatingsearchview.FloatingSearchView
+            android:id="@+id/searchView"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_background_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:floatingSearch_searchHint="Search..."
+            app:floatingSearch_suggestionsListAnimDuration="250"
+            app:floatingSearch_showSearchKey="false"
+            app:floatingSearch_leftActionMode="showSearch"
+            app:floatingSearch_close_search_on_keyboard_dismiss="true"
+            app:layout_constraintTop_toTopOf="@id/tvMessages"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/actionBar"
+            android:layout_marginTop="120dp"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="@id/tvMessages">
+
+            <TextView
+                android:id="@+id/tvOnlineUser"
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/online_users"
+                android:textColor="@color/colorGrey"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/actionBar"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="40dp"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/tvOnlineUser"
+                app:layout_constraintStart_toStartOf="parent">
+
+
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

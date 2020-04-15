@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Intern20Summer</string>
+    <string name="messages">Messages</string>
+    <string name="online_users">ONLINE USERS</string>
 </resources>
