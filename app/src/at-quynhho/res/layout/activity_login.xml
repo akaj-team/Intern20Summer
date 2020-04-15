@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.asiantech.LoginActivity">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +30,6 @@
             android:background="@drawable/ic_background_editbottom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvBgSignin">
-
 
             <TextView
                 android:id="@+id/tvFb"
@@ -110,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="65dp"
-                android:text="Or"
+                android:text="@string/or"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/imgGg" />
@@ -144,9 +142,11 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="40dp"
+                android:autofillHints=""
                 android:background="@drawable/ic_background_login"
                 android:gravity="center|left"
                 android:hint="@string/email_of_mobile_number"
+                android:inputType="text"
                 android:paddingLeft="20dp"
                 android:textColor="@color/colorGrey"
                 android:textSize="15sp"
@@ -161,9 +161,11 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="60dp"
                 android:layout_marginRight="40dp"
+                android:autofillHints=""
                 android:background="@drawable/ic_background_login"
                 android:gravity="center|left"
                 android:hint="@string/password"
+                android:inputType="text"
                 android:paddingLeft="20dp"
                 android:textColor="@color/colorGrey"
                 android:textSize="15sp"

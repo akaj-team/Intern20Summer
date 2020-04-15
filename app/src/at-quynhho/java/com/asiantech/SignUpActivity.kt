@@ -20,26 +20,24 @@ class SignUpActivity : AppCompatActivity() {
                 tvpasssignup.text.toString().trim() == (Login.PASSW) &&
                 tvConfpass.text.toString().trim() == (Login.RE_PASSW)
             ) {
-                Toast.makeText(this, "message", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Sign up success!", Toast.LENGTH_SHORT).show()
             }
-
         }
         tvSigin.setOnClickListener {
-            val intent: Intent = Intent(this@SignUpActivity, LoginActivity::class.java)
+            val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
             startActivity(intent)
         }
         tvFbSgup.setOnClickListener {
-            val intent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com"))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com"))
             startActivity(intent)
         }
         tvTwSup.setOnClickListener {
-            val intent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.twitter.com"))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.twitter.com"))
             startActivity(intent)
         }
         tvGgSup.setOnClickListener {
-            val intent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
             startActivity(intent)
         }
     }
 }
-

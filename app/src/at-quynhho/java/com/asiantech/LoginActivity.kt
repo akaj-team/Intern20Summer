@@ -18,19 +18,19 @@ class LoginActivity : AppCompatActivity() {
             login()
         }
         tvsignup.setOnClickListener() {
-            val intent: Intent = Intent(this@LoginActivity, SignUpActivity::class.java)
+            val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             startActivity(intent)
         }
         tvFb.setOnClickListener {
-            val intent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com"))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.facebook.com"))
             startActivity(intent)
         }
         tvTw.setOnClickListener {
-            val intent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.twitter.com"))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.twitter.com"))
             startActivity(intent)
         }
         tvGg.setOnClickListener {
-            val intent: Intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
             startActivity(intent)
         }
     }
@@ -45,19 +45,18 @@ class LoginActivity : AppCompatActivity() {
 
 
         } else {
-
-            val mess = android.app.AlertDialog.Builder(this)
-            mess.setMessage("The account login is incorrect!")
-                .setNegativeButton(
-                    "OK",
-                    { dialogInterface: DialogInterface, i -> goCheckMail() })
-                .show()
-
+            val mess = android.app.AlertDialog.Builder(this).also {
+                it.setMessage("The account login is incorrect!")
+                    .setNegativeButton(
+                        "OK"
+                    ) { dialogInterface: DialogInterface, i -> goCheckMail() }
+                    .show()
+            }
         }
     }
 
     private fun goHome() {
-        var intent = (Intent(this, MainActivity::class.java))
+        val intent = (Intent(this, MainActivity::class.java))
         intent.putExtra("data", "Login success")
         startActivity(intent)
     }
@@ -65,7 +64,6 @@ class LoginActivity : AppCompatActivity() {
     private fun goCheckMail() {
         startActivity(Intent(this, CheckEmailActivity::class.java))
     }
-
 
 }
 

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Intern20Summer</string>
+    <string name="or">Or</string>
+    <string name="please_enter_your_email_address">Please Enter Your Email Address</string>
+    <string name="send">Send</string>
 
 </resources>
