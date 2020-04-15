@@ -1,7 +1,6 @@
 package com.asiantech.summer.layoutfragment
 
 import android.Manifest
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.ContentValues
 import android.content.Intent
@@ -20,46 +19,68 @@ import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import com.asiantech.summer.R
 import kotlinx.android.synthetic.`at-quynhho`.fragment_edit_profile.*
+import kotlinx.android.synthetic.`at-quynhho`.fragment_edit_profile.cvImg
 
 
 class EditProfileFragment : Fragment() {
     private val PERMISSION_CODE = 100
     private var image_uri: Uri? = null
     private var avatar: String = ""
+    private var myProfile: UserProfile? = null
+    private var myProfileEdit: UserProfile? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        arguments.let {
-//            avatar = it?.getString(ARG_AVATAR).toString()
-//            userName = it?.getString(USER_NAME).toString()
-//            phone = it?.getString(PHONE).toString()
-//            gender = it?.getString(GENDER).toString()
-//            birthDay = it?.getString(BIRTH_DAY).toString()
-//            language = it?.getString(LANGUAGE).toString()
-//        }
-//        val myProfile = UserProfile
+    companion object {
+        private const val USERPROFILE = "user"
+        fun newInstance(userProfile: UserProfile): EditProfileFragment {
+            return EditProfileFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(USERPROFILE, userProfile)
+                }
+            }
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
+        myProfile = arguments?.getParcelable(USERPROFILE)
         return inflater.inflate(R.layout.fragment_edit_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (myProfile != null) {
+            myProfile?.apply {
+                if (avatar.isEmpty()) {
+                    cvImg.setImageResource(R.drawable.icons_user)
+                } else {
+                    cvImg.setImageURI(Uri.parse(avatar))
+                }
+                etUserName.setText(userName)
+                etPhone.setText(phone)
+                etBith.setText(birthDay)
+                etGender.setText(gender)
+                etLanguage.setText(language)
+            }
+        }
+
         ivYes.setOnClickListener {
-            var edtAvatar = image_uri.toString()
-            var edtName = etUserName.text.toString()
-            var edtPhone = etPhone.text.toString()
-            var edtBirth = etBith.text.toString()
-            var edtGender = etGender.text.toString()
-            var edtLanguage = etLanguage.text.toString()
-            var userProfile =
+            val edtAvatar = image_uri.toString()
+            val edtName = etUserName.text.toString()
+            val edtPhone = etPhone.text.toString()
+            val edtBirth = etBith.text.toString()
+            val edtGender = etGender.text.toString()
+            val edtLanguage = etLanguage.text.toString()
+            myProfileEdit =
                 UserProfile(edtAvatar, edtName, edtPhone, edtGender, edtBirth, edtLanguage)
             activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.profileFragment,MyProfileFragment.newInstance(userProfile))
+                ?.replace(R.id.profileFragment, MyProfileFragment.newInstance(myProfileEdit!!))
+                ?.commit()
+        }
+        ivNo.setOnClickListener {
+            fragmentManager?.beginTransaction()
+                ?.replace(R.id.profileFragment, MyProfileFragment())
+                ?.addToBackStack(null)
                 ?.commit()
         }
         if (avatar != "") {
@@ -123,12 +144,7 @@ class EditProfileFragment : Fragment() {
             cvImg.setImageURI(image_uri)
             Log.d("vv", data?.data.toString())
             avatar = image_uri.toString()
-            ivNo.setOnClickListener {
-                fragmentManager?.beginTransaction()
-                    ?.replace(R.id.profileFragment, MyProfileFragment(), null)
-                    ?.addToBackStack(null)
-                    ?.commit()
-            }
+
 
         }
     }
