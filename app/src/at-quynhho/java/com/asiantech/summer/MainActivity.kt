@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.asiantech.summer.layoutfragment.MyProfileFragment
 import com.asiantech.summer.layoutfragment.UserProfile
 
-
 class MainActivity : AppCompatActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

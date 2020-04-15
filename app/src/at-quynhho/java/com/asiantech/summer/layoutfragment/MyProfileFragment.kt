@@ -9,17 +9,15 @@ import androidx.fragment.app.Fragment
 import com.asiantech.summer.R
 import kotlinx.android.synthetic.`at-quynhho`.fragment_my_profile.*
 
-
-@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MyProfileFragment : Fragment() {
     private var myProfile: UserProfile? = null
 
     companion object {
-        private const val USERPROFILE = "user"
+        private const val USER_PROFILE = "user"
         fun newInstance(userProfile: UserProfile): MyProfileFragment {
             return MyProfileFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(USERPROFILE, userProfile)
+                    putParcelable(USER_PROFILE, userProfile)
                 }
             }
         }
@@ -28,7 +26,7 @@ class MyProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        myProfile = arguments?.getParcelable(USERPROFILE)
+        myProfile = arguments?.getParcelable(USER_PROFILE)
         return inflater.inflate(R.layout.fragment_my_profile, container, false)
     }
 

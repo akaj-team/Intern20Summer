@@ -21,20 +21,20 @@ import com.asiantech.summer.R
 import kotlinx.android.synthetic.`at-quynhho`.fragment_edit_profile.*
 import kotlinx.android.synthetic.`at-quynhho`.fragment_edit_profile.cvImg
 
-
 class EditProfileFragment : Fragment() {
-    private val PERMISSION_CODE = 100
-    private var image_uri: Uri? = null
+
+    private var imageUri: Uri? = null
     private var avatar: String = ""
     private var myProfile: UserProfile? = null
     private var myProfileEdit: UserProfile? = null
 
     companion object {
-        private const val USERPROFILE = "user"
+        private const val PERMISSION_CODE = 100
+        private const val USER_PROFILE = "user"
         fun newInstance(userProfile: UserProfile): EditProfileFragment {
             return EditProfileFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(USERPROFILE, userProfile)
+                    putParcelable(USER_PROFILE, userProfile)
                 }
             }
         }
@@ -43,7 +43,7 @@ class EditProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        myProfile = arguments?.getParcelable(USERPROFILE)
+        myProfile = arguments?.getParcelable(USER_PROFILE)
         return inflater.inflate(R.layout.fragment_edit_profile, container, false)
     }
 
@@ -65,7 +65,7 @@ class EditProfileFragment : Fragment() {
         }
 
         ivYes.setOnClickListener {
-            val edtAvatar = image_uri.toString()
+            val edtAvatar = imageUri.toString()
             val edtName = etUserName.text.toString()
             val edtPhone = etPhone.text.toString()
             val edtBirth = etBith.text.toString()
@@ -115,9 +115,9 @@ class EditProfileFragment : Fragment() {
         val resolver = context?.contentResolver
         values.put(MediaStore.Images.Media.TITLE, "New Picture")
         values.put(MediaStore.Images.Media.DESCRIPTION, "From the Camera")
-        image_uri = resolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        imageUri = resolver?.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         startActivityForResult(cameraIntent, PERMISSION_CODE)
     }
 
@@ -141,9 +141,9 @@ class EditProfileFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK && requestCode == PERMISSION_CODE) {
-            cvImg.setImageURI(image_uri)
+            cvImg.setImageURI(imageUri)
             Log.d("vv", data?.data.toString())
-            avatar = image_uri.toString()
+            avatar = imageUri.toString()
 
 
         }

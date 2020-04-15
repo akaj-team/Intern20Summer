@@ -2,7 +2,6 @@ package com.asiantech.summer.layoutfragment
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-
 @Parcelize
 class UserProfile(
     var avatar: String,
@@ -11,6 +10,4 @@ class UserProfile(
     var gender: String,
     var birthDay: String,
     var language: String
-) : Parcelable {
-
-}
+) : Parcelable
