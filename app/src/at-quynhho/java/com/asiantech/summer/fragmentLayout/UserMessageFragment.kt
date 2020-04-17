@@ -5,6 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StableIdKeyProvider
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asiantech.summer.R
 import com.asiantech.summer.data.DataMessageUserView
@@ -12,12 +16,14 @@ import com.asiantech.summer.data.DataUserOnlineView
 import com.asiantech.summer.recyclerView.TabBarInforUserMessageAdapter
 import com.asiantech.summer.recyclerView.UserMessageOnlineViewAdapter
 import kotlinx.android.synthetic.`at-quynhho`.fragment_menu_message.*
+import kotlinx.android.synthetic.`at-quynhho`.user_vertical_message.*
 
 
 class UserMessageFragment : Fragment() {
 
     lateinit var adapterUserOn: UserMessageOnlineViewAdapter
     lateinit var adapterInfoMess : TabBarInforUserMessageAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

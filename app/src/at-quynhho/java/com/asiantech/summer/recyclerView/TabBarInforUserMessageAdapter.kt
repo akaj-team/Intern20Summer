@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.asiantech.summer.R
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.`at-quynhho`.user_online_horizontal_message.view.*
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.`at-quynhho`.user_vertical_message.view.*
-import java.util.ArrayList
+import java.util.*
 
 class TabBarInforUserMessageAdapter :
     RecyclerView.Adapter<TabBarInforUserMessageAdapter.RecyclerInfoViewHolder?>() {
@@ -19,9 +19,18 @@ class TabBarInforUserMessageAdapter :
         val avatarUserMess = itemView.civAvatarUserMess
         val userNameUserChat = itemView.tvUserNameChat
         val inforMessUser = itemView.tvInformationChat
+        var checkNumMess = itemView.tvCheckNumMess
+
         fun bindInfo(informationUserMessage: InformationUserMessage) {
             userNameUserChat.text = informationUserMessage.userNameUser
             inforMessUser.text = informationUserMessage.messageUser
+            checkNumMess?.apply {
+                text = informationUserMessage.checkNumber.toString()
+                background.setBackgroundResource(R.drawable.ic_background_check_number)
+            }
+
+
+
             Glide.with(itemView.context)
                 .load(informationUserMessage.avatarUser)
                 .into(avatarUserMess)
@@ -56,5 +65,7 @@ class TabBarInforUserMessageAdapter :
     }
 }
 
+private fun Any.setBackgroundResource(icBackgroundCheckNumber: Int) {
 
+}
 
