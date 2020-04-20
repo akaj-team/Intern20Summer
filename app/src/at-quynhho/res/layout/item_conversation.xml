@@ -1,4 +1,5 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,11 +22,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvCheckNumMess"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
+            android:id="@+id/tvMessageUnread"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginTop="48dp"
             android:gravity="center"
+            android:background="@drawable/bg_number_message_unread"
             android:textColor="@color/colorWhite"
             android:textSize="10sp"
             app:layout_constraintRight_toRightOf="@id/civAvatarUserMess"
@@ -70,7 +72,7 @@
             android:layout_marginStart="250dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="30dp"
-            android:src="@drawable/icon_star"
+            android:src="@drawable/selector_star"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="@id/tvUserNameChat"
             app:layout_constraintStart_toStartOf="@id/clUserChat"
