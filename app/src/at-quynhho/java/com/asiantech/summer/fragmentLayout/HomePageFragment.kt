@@ -51,12 +51,6 @@ class HomePageFragment : Fragment() {
             conversations[it].isLike = !conversations[it].isLike
             adapterConversation.notifyDataSetChanged()
         }
-
-
-//        imgStarOn.setOnClickListener {
-//             fun changeColor(){
-//            }
-        //       }
     }
 
     private fun addDataUserOnline() {
