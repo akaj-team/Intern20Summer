@@ -23,36 +23,39 @@ class MyProfileFragment : Fragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        myProfile = arguments?.getParcelable(USER_PROFILE)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        myProfile = arguments?.getParcelable(USER_PROFILE)
         return inflater.inflate(R.layout.fragment_my_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (myProfile != null) {
-            myProfile?.apply {
-                if (avatar.isEmpty()) {
-                    cvImg.setImageResource(R.drawable.icons_user)
-                } else {
-                    cvImg.setImageURI(Uri.parse(avatar))
-                }
-                tvUserName.text = userName
-                tvPhone.text = phone
-                tvGender.text = gender
-                tvBith.text = birthDay
-                tvLanguage.text = language
+        myProfile?.apply {
+            if (avatar.isEmpty()) {
+                civMyImg.setImageResource(R.drawable.icons_user)
+            } else {
+                civMyImg.setImageURI(Uri.parse(avatar))
             }
-            tvButton.setOnClickListener {
-                fragmentManager?.beginTransaction()
-                    ?.replace(R.id.profileFragment, EditProfileFragment.newInstance(myProfile!!))
-                    ?.addToBackStack(null)
-                    ?.commit()
-            }
+            tvUserName.text = userName
+            tvPhone.text = phone
+            tvGender.text = gender
+            tvBith.text = birthDay
+            tvLanguage.text = language
+        }
+        btButton.setOnClickListener {
+            fragmentManager?.beginTransaction()
+                ?.replace(R.id.flProfileFragment, EditProfileFragment.newInstance(myProfile))
+                ?.addToBackStack(null)
+                ?.commit()
         }
     }
 }
+
 
 

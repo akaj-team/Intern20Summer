@@ -14,12 +14,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
 import com.asiantech.summer.R
 import kotlinx.android.synthetic.`at-quynhho`.fragment_edit_profile.*
-import kotlinx.android.synthetic.`at-quynhho`.fragment_edit_profile.cvImg
 
 class EditProfileFragment : Fragment() {
 
@@ -31,7 +29,7 @@ class EditProfileFragment : Fragment() {
     companion object {
         private const val PERMISSION_CODE = 100
         private const val USER_PROFILE = "user"
-        fun newInstance(userProfile: UserProfile): EditProfileFragment {
+        fun newInstance(userProfile: UserProfile?): EditProfileFragment {
             return EditProfileFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(USER_PROFILE, userProfile)
@@ -49,44 +47,36 @@ class EditProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (myProfile != null) {
-            myProfile?.apply {
-                if (avatar.isEmpty()) {
-                    cvImg.setImageResource(R.drawable.icons_user)
-                } else {
-                    cvImg.setImageURI(Uri.parse(avatar))
-                }
-                etUserName.setText(userName)
-                etPhone.setText(phone)
-                etBith.setText(birthDay)
-                etGender.setText(gender)
-                etLanguage.setText(language)
+        myProfile?.apply {
+            if (avatar.isEmpty()) {
+                civImg.setImageResource(R.drawable.icons_user)
+            } else {
+                civImg.setImageURI(Uri.parse(avatar))
             }
+            edtUserName.setText(userName)
+            edtPhone.setText(phone)
+            edtBith.setText(birthDay)
+            edtGender.setText(gender)
+            edtLanguage.setText(language)
         }
 
-        ivYes.setOnClickListener {
+        imgYes.setOnClickListener {
             val edtAvatar = imageUri.toString()
-            val edtName = etUserName.text.toString()
-            val edtPhone = etPhone.text.toString()
-            val edtBirth = etBith.text.toString()
-            val edtGender = etGender.text.toString()
-            val edtLanguage = etLanguage.text.toString()
+            val edtName = edtUserName.text.toString()
+            val edtPhone = edtPhone.text.toString()
+            val edtBirth = edtBith.text.toString()
+            val edtGender = edtGender.text.toString()
+            val edtLanguage = edtLanguage.text.toString()
             myProfileEdit =
                 UserProfile(edtAvatar, edtName, edtPhone, edtGender, edtBirth, edtLanguage)
             activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.profileFragment, MyProfileFragment.newInstance(myProfileEdit!!))
+                ?.add(R.id.flProfileFragment, MyProfileFragment.newInstance(myProfileEdit!!))
                 ?.commit()
         }
-        ivNo.setOnClickListener {
-            fragmentManager?.beginTransaction()
-                ?.replace(R.id.profileFragment, MyProfileFragment())
-                ?.addToBackStack(null)
-                ?.commit()
+        imgNo.setOnClickListener {
+            activity?.supportFragmentManager?.popBackStack()
         }
-        if (avatar != "") {
-            cvImg.setImageURI(avatar.toUri())
-        }
-        ivCamera.setOnClickListener {
+        imgCamera.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
                     == PackageManager.PERMISSION_DENIED ||
@@ -141,13 +131,12 @@ class EditProfileFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK && requestCode == PERMISSION_CODE) {
-            cvImg.setImageURI(imageUri)
+            civImg.setImageURI(imageUri)
             Log.d("vv", data?.data.toString())
             avatar = imageUri.toString()
 
 
         }
     }
-
 
 }

@@ -5,14 +5,14 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/editProfileFrag"
+        android:id="@+id/clEditProfileFrag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
         tools:context=".layoutfragment.EditProfileFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/editProfile"
+            android:id="@+id/edtProfile"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginLeft="10dp"
@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/ivNo"
+                android:id="@+id/imgNo"
                 android:layout_width="30dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="20dp"
@@ -44,24 +44,24 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/ivYes"
+                android:id="@+id/imgYes"
                 android:layout_width="30dp"
                 android:layout_height="20dp"
                 android:layout_marginTop="35dp"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/ic_yes"
                 app:layout_constraintRight_toRightOf="@id/tvEditProfile"
-                app:layout_constraintTop_toTopOf="@id/editProfile" />
+                app:layout_constraintTop_toTopOf="@id/edtProfile" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="100dp"
-            app:layout_constraintTop_toTopOf="@id/editProfile">
+            app:layout_constraintTop_toTopOf="@id/edtProfile">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/cvImg"
+                android:id="@+id/civImg"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginTop="40dp"
@@ -73,21 +73,21 @@
                 tools:ignore="MissingConstraints" />
 
             <ImageView
-                android:id="@+id/ivCamera"
+                android:id="@+id/imgCamera"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/ic_camera"
-                app:layout_constraintBottom_toBottomOf="@id/cvImg"
-                app:layout_constraintRight_toRightOf="@id/cvImg" />
+                app:layout_constraintBottom_toBottomOf="@id/civImg"
+                app:layout_constraintRight_toRightOf="@id/civImg" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/bgProfile"
+                android:id="@+id/clBgProfile"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="160dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/cvImg">
+                app:layout_constraintTop_toTopOf="@id/civImg">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -96,7 +96,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                    android:id="@+id/etUserName"
+                    android:id="@+id/edtUserName"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="5dp"
@@ -115,10 +115,10 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="55dp"
                     android:background="@drawable/ic_background_sceen"
-                    app:layout_constraintTop_toTopOf="@id/etUserName" />
+                    app:layout_constraintTop_toTopOf="@id/edtUserName" />
 
                 <EditText
-                    android:id="@+id/etPhone"
+                    android:id="@+id/edtPhone"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="60dp"
@@ -130,7 +130,7 @@
                     android:paddingTop="15dp"
                     android:textSize="13sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/etUserName"
+                    app:layout_constraintTop_toTopOf="@id/edtUserName"
                     tools:ignore="TextFields" />
 
                 <TextView
@@ -138,10 +138,10 @@
                     android:layout_height="60dp"
                     android:layout_marginTop="55dp"
                     android:background="@drawable/ic_background_sceen"
-                    app:layout_constraintTop_toTopOf="@id/etPhone" />
+                    app:layout_constraintTop_toTopOf="@id/edtPhone" />
 
                 <EditText
-                    android:id="@+id/etGender"
+                    android:id="@+id/edtGender"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="60dp"
@@ -153,17 +153,17 @@
                     android:paddingTop="15dp"
                     android:textSize="13sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/etPhone" />
+                    app:layout_constraintTop_toTopOf="@id/edtPhone" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="55dp"
                     android:background="@drawable/ic_background_sceen"
-                    app:layout_constraintTop_toTopOf="@id/etGender" />
+                    app:layout_constraintTop_toTopOf="@id/edtGender" />
 
                 <EditText
-                    android:id="@+id/etBith"
+                    android:id="@+id/edtBith"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="60dp"
@@ -175,17 +175,17 @@
                     android:paddingTop="15dp"
                     android:textSize="13sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/etGender" />
+                    app:layout_constraintTop_toTopOf="@id/edtGender" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginTop="55dp"
                     android:background="@drawable/ic_background_sceen"
-                    app:layout_constraintTop_toTopOf="@id/etBith" />
+                    app:layout_constraintTop_toTopOf="@id/edtBith" />
 
                 <EditText
-                    android:id="@+id/etLanguage"
+                    android:id="@+id/edtLanguage"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="60dp"
@@ -197,7 +197,7 @@
                     android:paddingTop="15dp"
                     android:textSize="13sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/etBith" />
+                    app:layout_constraintTop_toTopOf="@id/edtBith" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

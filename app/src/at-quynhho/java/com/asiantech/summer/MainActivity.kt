@@ -10,11 +10,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val userProfile = UserProfile("", "", "", "", "", "")
+        val userProfile = UserProfile()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.profileFragment, MyProfileFragment.newInstance(userProfile))
+            .replace(R.id.flProfileFragment, MyProfileFragment.newInstance(userProfile))
             .addToBackStack(null)
             .commit()
     }
-
 }

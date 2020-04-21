@@ -5,10 +5,11 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class UserProfile(
-    var avatar: String,
-    var userName: String,
-    var phone: String,
-    var gender: String,
-    var birthDay: String,
-    var language: String
+    var avatar: String = "",
+    var userName: String = "",
+    var phone: String = "",
+    var gender: String = "",
+    var birthDay: String = "",
+    var language: String = ""
 ) : Parcelable
+
