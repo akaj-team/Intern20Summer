@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.`at-quynhho`.time_converstation.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class ContentAdapter(private val message: MutableList<DataMessage>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
 

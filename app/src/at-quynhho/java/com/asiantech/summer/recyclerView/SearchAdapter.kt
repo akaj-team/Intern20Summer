@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.asiantech.summer.R
 import com.asiantech.summer.data.UserOnline
-import kotlinx.android.synthetic.`at-quynhho`.fragment_menu_message.*
-import kotlinx.android.synthetic.`at-quynhho`.item_list_user.view.*
 import kotlinx.android.synthetic.`at-quynhho`.item_list_user_message.view.*
 
 class SearchAdapter(private val search: ArrayList<UserOnline>) :
