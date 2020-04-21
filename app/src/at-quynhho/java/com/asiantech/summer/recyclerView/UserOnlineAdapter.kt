@@ -33,19 +33,16 @@ class UserOnlineAdapter : RecyclerView.Adapter<UserOnlineAdapter.RecyclerViewHol
         )
     }
 
-    fun submitList(list : List<UserOnline>){
+    fun submitList(list: List<UserOnline>) {
         items = list
     }
+
     override fun getItemCount(): Int {
         return items.size
     }
 
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        when (holder) {
-            is RecyclerViewHolder -> {
-                holder.bind(items.get(position))
-            }
-        }
+        (holder as? RecyclerViewHolder)?.bind(items[position])
     }
 
 }

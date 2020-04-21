@@ -31,7 +31,7 @@ class ConversationAdapter(private var itemsInfo: List<Conversation>) :
             }
         }
 
-        fun bindInfo(conversation: Conversation) {
+        fun bind(conversation: Conversation) {
             userNameUserChat.text = conversation.userNameUser
             inforMessUser.text = conversation.messageUser
             if (conversation.numberMessageUnRead == 0) {
@@ -50,8 +50,6 @@ class ConversationAdapter(private var itemsInfo: List<Conversation>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerInfoViewHolder {
-
-
         return RecyclerInfoViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.item_conversation,
@@ -66,11 +64,7 @@ class ConversationAdapter(private var itemsInfo: List<Conversation>) :
     }
 
     override fun onBindViewHolder(holder: RecyclerInfoViewHolder, position: Int) {
-        when (holder) {
-            is RecyclerInfoViewHolder -> {
-                holder.bindInfo(itemsInfo.get(position))
-            }
-        }
+        (holder as? RecyclerInfoViewHolder)?.bind(itemsInfo[position])
     }
 }
 

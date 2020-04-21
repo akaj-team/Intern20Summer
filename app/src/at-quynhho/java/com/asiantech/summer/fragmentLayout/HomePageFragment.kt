@@ -12,6 +12,7 @@ import com.asiantech.summer.data.DataUserOnline
 import com.asiantech.summer.recyclerView.ConversationAdapter
 import com.asiantech.summer.recyclerView.UserOnlineAdapter
 import kotlinx.android.synthetic.`at-quynhho`.fragment_menu_message.*
+
 class HomePageFragment : Fragment() {
 
     lateinit var adapterUserOn: UserOnlineAdapter
@@ -51,10 +52,20 @@ class HomePageFragment : Fragment() {
             conversations[it].isLike = !conversations[it].isLike
             adapterConversation.notifyDataSetChanged()
         }
+
+        svSearch.setOnClickListener {
+            fragmentManager?.beginTransaction()
+                ?.replace(
+                    R.id.flMainMessage, ListUserFragment()
+                )
+                ?.addToBackStack(null)
+                ?.commit()
+        }
+
     }
 
     private fun addDataUserOnline() {
-        var data = DataUserOnline.initDataOnline()
+        val data = DataUserOnline.initDataOnline()
         adapterUserOn.submitList(data)
     }
 
