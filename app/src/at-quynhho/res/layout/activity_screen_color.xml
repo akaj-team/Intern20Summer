@@ -1,10 +1,11 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Activity">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
@@ -13,7 +14,7 @@
         android:orientation="vertical" />
 
     <me.relex.circleindicator.CircleIndicator
-        android:id="@+id/indicator"
+        android:id="@+id/ciIndicator"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
@@ -23,13 +24,13 @@
     <TextView
         android:id="@+id/tvAction"
         android:layout_width="wrap_content"
-        android:layout_marginRight="10dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="16dp"
-        android:textStyle="bold"
         android:textColor="@color/colorBlack"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

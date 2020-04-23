@@ -3,20 +3,15 @@ package com.asiantech.summer.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.asiantech.summer.Page
 
-class TabLayoutAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-
-    var mFm = fm
-    var mFragmentItem: ArrayList<Fragment> = ArrayList()
-    var mFragmentTitle: ArrayList<String> = ArrayList()
-
+class TabLayoutAdapter(private val pages:List<Page>,fm: FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): Fragment{
-        return mFragmentItem[position]
+        return pages[position].fragment
     }
+    override fun getCount() = pages.size
 
-    fun addFragment(fragmentItem: Fragment, fragmentTitle:String){
-        mFragmentItem.add(fragmentItem)
-        mFragmentTitle.add(fragmentTitle)
+    override fun getPageTitle(position: Int): CharSequence? {
+        return pages[position].title
     }
-    override fun getCount() = mFragmentItem.size
 }

@@ -14,7 +14,7 @@ class ScreenColorFragment : Fragment() {
     companion object{
         private const val KEY = "items"
         fun newInstance(position: Int): ScreenColorFragment {
-            var mfragment = ScreenColorFragment()
+            val mfragment = ScreenColorFragment()
             mfragment.arguments = Bundle().apply{
                 putInt(KEY, position)
             }

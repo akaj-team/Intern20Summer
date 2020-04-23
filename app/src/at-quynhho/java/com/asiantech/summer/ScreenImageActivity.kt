@@ -1,26 +1,27 @@
 package com.asiantech.summer
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import com.asiantech.summer.adapter.TabLayoutAdapter
+import com.asiantech.summer.fragment.AnotherFragment
 import com.asiantech.summer.fragment.HomeFragment
 import com.asiantech.summer.fragment.InformationFragment
-import com.asiantech.summer.fragment.AnotherFragment
-import kotlinx.android.synthetic.`at-quynhho`.activity_main.*
+import kotlinx.android.synthetic.`at-quynhho`.activity_home_screen_image.*
 
 class ScreenImageActivity : AppCompatActivity() {
 
-    var pagerAdapter: TabLayoutAdapter? = null
+    var tabAdapter: TabLayoutAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_home_screen_image)
+        val pages = mutableListOf<Page>()
+        pages.add(Page(HomeFragment(), "HOME"))
+        pages.add(Page(InformationFragment(), "INFO"))
+        pages.add(Page(AnotherFragment(), "ANOTHER"))
 
-        pagerAdapter = TabLayoutAdapter(supportFragmentManager)
-        pagerAdapter?.addFragment(HomeFragment(), "HOME")
-        pagerAdapter?.addFragment(InformationFragment(), "INFO")
-        pagerAdapter?.addFragment(AnotherFragment(), "ANOTHER")
-
-        vpScreen.adapter = pagerAdapter
+        tabAdapter = TabLayoutAdapter(pages, supportFragmentManager)
+        vpScreen.adapter = tabAdapter
         tlScreen.setupWithViewPager(vpScreen)
     }
 }
+

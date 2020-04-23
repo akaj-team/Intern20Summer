@@ -18,8 +18,10 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.item_viewpager_home, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         imgScreen.setImageResource(R.drawable.background_screen1)
     }
 }
+
+
