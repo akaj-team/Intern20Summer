@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Intern20Summer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="nickname">NickName</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="add_todo">Add ToDo</string>
+    <string name="todo">ToDo</string>
 </resources>
