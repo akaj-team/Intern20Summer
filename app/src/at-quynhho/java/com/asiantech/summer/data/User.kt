@@ -1,34 +1,34 @@
 package com.asiantech.summer.data
 
-import android.graphics.Bitmap
+import android.text.Editable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.io.ByteArrayOutputStream
-import java.util.*
 
 @Entity
 data class User(
-    @PrimaryKey
-    val userId: Int,
- //   @ColumnInfo(name = "image") val avatar: Bitmap,
+    @PrimaryKey(autoGenerate = true) val userId: Int,
+    @ColumnInfo(name = "image") val avatar: String?,
     @ColumnInfo(name = "user_name") val userName: String?,
     @ColumnInfo(name = "nick_name") val nickName: String?,
     @ColumnInfo(name = "pass") val password: String?
 
 
 )
-{
-    private fun convertBitMap(bitmap: Bitmap) : String? {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
-        val byteArray = byteArrayOutputStream.toByteArray()
-        return Base64.encodeToString(byteArray, Base64.DEFAULT)
-    }
-    private fun convertString(base64String: String) : Bitmap{
-
-    }
-}
+//{
+//    private fun convertBitMapToBase64(bitmap: Bitmap): String? {
+//        val byteArrayOutputStream = ByteArrayOutputStream()
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+//        val byteArray = byteArrayOutputStream.toByteArray()
+//        return Base64.encodeToString(byteArray, Base64.DEFAULT)
+//    }
+//
+//    private fun convertBase64ToBitMap(base64String: String): Bitmap {
+//        val decodedString = Base64.decode(base64String, Base64.DEFAULT)
+//        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+//    }
+//
+//}
 
 
 

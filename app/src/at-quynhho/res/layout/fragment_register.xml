@@ -6,7 +6,7 @@
     tools:context="com.asiantech.summer.fragment.RegisterFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="40dp"
         android:id="@+id/civAvatar"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/edUserName"
+        android:id="@+id/edtUserName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="40dp"
@@ -30,7 +30,7 @@
         tools:ignore="PrivateResource" />
 
     <EditText
-        android:id="@+id/edNickName"
+        android:id="@+id/edtNickName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="40dp"
@@ -39,12 +39,12 @@
         android:padding="10dp"
         android:background="@color/cardview_light_background"
         android:hint="@string/nickname"
-        app:layout_constraintTop_toBottomOf="@id/edUserName"
+        app:layout_constraintTop_toBottomOf="@id/edtUserName"
         android:autofillHints=""
         tools:ignore="PrivateResource" />
 
     <EditText
-        android:id="@+id/edPassword"
+        android:id="@+id/edtPassword"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="40dp"
@@ -53,14 +53,14 @@
         android:padding="10dp"
         android:background="@color/cardview_light_background"
         android:hint="@string/password"
-        app:layout_constraintTop_toBottomOf="@id/edNickName"
+        app:layout_constraintTop_toBottomOf="@id/edtNickName"
         android:autofillHints=""
         android:importantForAutofill="no"
         tools:ignore="PrivateResource" />
 
 
     <Button
-        android:id="@+id/btLogin"
+        android:id="@+id/btRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -68,8 +68,8 @@
         android:background="@color/colorBlue"
         android:text="@string/register"
         android:textColor="@color/colorWhite"
-        app:layout_constraintLeft_toLeftOf="@id/edPassword"
-        app:layout_constraintRight_toRightOf="@id/edPassword"
-        app:layout_constraintTop_toBottomOf="@id/edPassword" />
+        app:layout_constraintLeft_toLeftOf="@id/edtPassword"
+        app:layout_constraintRight_toRightOf="@id/edtPassword"
+        app:layout_constraintTop_toBottomOf="@id/edtPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
