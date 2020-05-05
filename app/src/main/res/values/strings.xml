@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Intern20Summer</string>
+    <string name="username">Username</string>
+    <string name="phone_no">Phone no.</string>
+    <string name="gender">Gender</string>
+    <string name="date_of_bith">Date of bith</string>
+    <string name="language">Language</string>
+    <string name="edit_profile_button">EDIT PROFILE</string>
+    <string name="my_profile">My Profile</string>
 </resources>
