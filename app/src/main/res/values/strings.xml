@@ -4,4 +4,8 @@
     <string name="step_1">Step 1</string>
     <string name="step_2">Step 2</string>
     <string name="step_3">Step 3</string>
+    <string name="march">March</string>
+    <string name="edit_todo">Edit ToDo</string>
+    <string name="todo_content">Todo content..</string>
+    <string name="add_todo">Add ToDo</string>
 </resources>

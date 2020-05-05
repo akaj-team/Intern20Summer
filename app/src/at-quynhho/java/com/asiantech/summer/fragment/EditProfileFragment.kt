@@ -1,7 +1,7 @@
 package com.asiantech.summer.fragment
 
 import android.Manifest
-import android.app.Activity.RESULT_OK
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -12,36 +12,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.asiantech.summer.R
 import com.asiantech.summer.data.User
 import com.asiantech.summer.database.NoteDatabase
-import kotlinx.android.synthetic.`at-quynhho`.fragment_register.*
+import kotlinx.android.synthetic.`at-quynhho`.item_header_edit_profile.*
 
-
-class RegisterFragment : Fragment() {
+class EditProfileFragment : Fragment() {
 
     private var imageGallery: Uri? = null
+    private var editUser: User? = null
 
     companion object {
         private val IMAGE_CODE = 100
         private val PERMISSION_CODE = 101
+        private val USER_PROFILE = "user"
+        fun newInstance(user: User): MenuFragment {
+            return MenuFragment(user).apply {
+                arguments = Bundle().apply {
+                    putParcelable(USER_PROFILE, getParcelable(user.toString()))
+                }
+            }
+        }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        return inflater.inflate(R.layout.item_header_edit_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        civAvatar.setOnClickListener {
+        civAvatarEdit.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                if (ContextCompat.checkSelfPermission(
+                        requireContext(),
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    )
                     == PackageManager.PERMISSION_DENIED
                 ) {
                     val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -53,14 +65,10 @@ class RegisterFragment : Fragment() {
                 pickImageFromGalley()
             }
         }
-        btRegister.setOnClickListener {
+        btEditProfile.setOnClickListener {
             saveData()
         }
-        btClickLogin.setOnClickListener {
-            fragmentManager?.beginTransaction()
-                ?.replace(R.id.flSignIn, LoginFragment())
-                ?.commit()
-        }
+
     }
 
     override fun onRequestPermissionsResult(
@@ -78,10 +86,10 @@ class RegisterFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == RESULT_OK && requestCode == IMAGE_CODE) {
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_CODE) {
             imageGallery = data?.data
             Log.d("images", "Select From Image Gallery: " + imageGallery.toString())
-            civAvatar.setImageURI(imageGallery)
+            civAvatarEdit.setImageURI(imageGallery)
         }
 
     }
@@ -96,28 +104,25 @@ class RegisterFragment : Fragment() {
     private fun saveData() {
 
         val imgAvatar = imageGallery.toString()
-        val edtName = edtUserName.text.toString()
-        val edtNick = edtNickName.text.toString()
-        val edtPass = edtPassword.text.toString()
+        val edtName = edtUserNameEdit.text.toString()
+        val edtNick = edtNickNameEdit.text.toString()
+        val edtPass = edtPasswordEdit.text.toString()
 
         when {
             imgAvatar.isEmpty() -> {
-                civAvatar.requestFocus()
+                civAvatarEdit.requestFocus()
                 return
             }
             edtName.isEmpty() -> {
-                edtUserName.error = "Import username"
-                edtUserName.requestFocus()
+                edtUserNameEdit.requestFocus()
                 return
             }
             edtNick.isEmpty() -> {
-                edtNickName.error = "Import nick name"
-                edtNickName.requestFocus()
+                edtNickNameEdit.requestFocus()
                 return
             }
             edtPass.isEmpty() -> {
-                edtPassword.error = "Import Password"
-                edtPassword.requestFocus()
+                edtPasswordEdit.requestFocus()
                 return
             }
         }
@@ -130,12 +135,14 @@ class RegisterFragment : Fragment() {
         )
         context?.let {
             val db = NoteDatabase.newInstance(it)
-            db?.userDao()?.insertAll(user)
+            db?.userDao()?.updateAll(user)
             db?.userDao()?.getAll()?.let {
                 Log.d("TAG11", "" + it[it.size - 1].userName)
             }
 
         }
-
+        editUser = user
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.add(R.id.flSignIn, MenuFragment.newInstance(editUser!!))?.commit()
     }
 }

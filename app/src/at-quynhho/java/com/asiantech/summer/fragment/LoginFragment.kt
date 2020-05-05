@@ -7,20 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.asiantech.summer.R
-import com.asiantech.summer.data.User
 import com.asiantech.summer.database.NoteDatabase
 import kotlinx.android.synthetic.`at-quynhho`.fragment_login.*
 
 
 class LoginFragment : Fragment() {
-
-    companion object {
-
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +25,11 @@ class LoginFragment : Fragment() {
 
         btLogin.setOnClickListener {
             checkLogin()
+        }
+        btClickRegister.setOnClickListener {
+            fragmentManager?.beginTransaction()
+                ?.replace(R.id.flSignIn, RegisterFragment())
+                ?.commit()
         }
     }
 
@@ -60,7 +56,7 @@ class LoginFragment : Fragment() {
                 Log.d("AAA", user.toString())
                 fragmentManager?.beginTransaction()?.replace(R.id.flSignIn, RegisterFragment())?.commit()
                 when {
-                    user != null -> { fragmentManager?.beginTransaction()?.replace(R.id.flToDo, ToDoFragment())?.commit()}
+                    user != null -> { fragmentManager?.beginTransaction()?.replace(R.id.flSignIn, MenuFragment(user))?.commit()}
                 }
             }
         }
