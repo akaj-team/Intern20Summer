@@ -28,13 +28,14 @@ android {
             signingConfig signingConfigs.debug
             applicationIdSuffix ".debug"
         }
+    }
 
-        flavorDimensions "at-name"
-        productFlavors {
-            'at-quynhho' {
-                dimension "at-name"
-                applicationIdSuffix ".quynhho"
-            }
+    flavorDimensions "at-name"
+
+    productFlavors {
+        'at-quynhho' {
+            dimension "at-name"
+            applicationIdSuffix ".quynhho"
         }
     }
 
