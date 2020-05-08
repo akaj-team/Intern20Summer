@@ -57,7 +57,7 @@ class RegisterFragment : Fragment() {
             saveData()
         }
         btClickLogin.setOnClickListener {
-            fragmentManager?.beginTransaction()
+            activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.flSignIn, LoginFragment())
                 ?.commit()
         }

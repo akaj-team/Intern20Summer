@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.asiantech.summer.R
+import com.asiantech.summer.SharePrefer
 import com.asiantech.summer.database.NoteDatabase
 import kotlinx.android.synthetic.`at-quynhho`.fragment_login.*
 
@@ -27,7 +28,7 @@ class LoginFragment : Fragment() {
             checkLogin()
         }
         btClickRegister.setOnClickListener {
-            fragmentManager?.beginTransaction()
+            activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.flSignIn, RegisterFragment())
                 ?.commit()
         }
@@ -51,12 +52,20 @@ class LoginFragment : Fragment() {
         }
         context?.let {
             val db = NoteDatabase.newInstance(it)
-            val user = db?.userDao()?.findByNameAndPass(mUserName = edtName.trim(), mPass = edtPass.trim())
+            val user =
+                db?.userDao()?.findByNameAndPass(mUserName = edtName.trim(), mPass = edtPass.trim())
             user.apply {
                 Log.d("AAA", user.toString())
-                fragmentManager?.beginTransaction()?.replace(R.id.flSignIn, RegisterFragment())?.commit()
+                activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.flSignIn, RegisterFragment())
+                    ?.commit()
                 when {
-                    user != null -> { fragmentManager?.beginTransaction()?.replace(R.id.flSignIn, MenuFragment(user))?.commit()}
+                    user != null -> {
+                        // Luu id user vao sharereferences
+                        val sharePrefer = SharePrefer(requireContext())
+                        sharePrefer.saveLogin(user.userId)
+                        activity?.supportFragmentManager?.beginTransaction()
+                            ?.replace(R.id.flSignIn, MenuFragment.newInstance())?.commit()
+                    }
                 }
             }
         }

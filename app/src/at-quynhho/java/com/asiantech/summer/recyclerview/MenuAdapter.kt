@@ -17,55 +17,17 @@ import kotlinx.android.synthetic.`at-quynhho`.nav_header_to_do_main.view.*
 import kotlinx.android.synthetic.`at-quynhho`.nav_menu_to_do_main.view.*
 
 class MenuAdapter(
-    private val listItem: ArrayList<Items>,
-    private var user: User
+    private val listItem: ArrayList<Items>
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
 
-    var setOnItemClick: (position:Int) ->Unit? = {}
+    var setOnItemClick: (position: Int) -> Unit? = {}
+
     companion object {
         private var NAV_HEADER = 0
         private var NAV_MENU = 1
-        private val KEY = "items"
     }
 
-    inner class MenuViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var textMenu: TextView? = null
-        var imgIcon: ImageView? = null
-
-        init {
-            textMenu = view.tvMenu
-            imgIcon = view.imgMenu
-            view.setOnClickListener{
-              setOnItemClick.invoke(adapterPosition)
-            }
-        }
-
-        fun bind() {
-            Log.d("QQQ", "MenuHolder")
-            listItem[adapterPosition].let {
-                textMenu?.text = it.itemTitle
-                imgIcon?.setImageResource(it.icon)
-            }
-        }
-
-    }
-
-    inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        fun bind() {
-            Log.d("QQQ", "HeaderHolder")
-            itemView.tvName.text = user.userName
-            itemView.tvNick.text = user.nickName
-            Glide.with(itemView)
-                .load(user.avatar)
-                .centerCrop()
-                .placeholder(R.drawable.icons_user)
-                .into(itemView.imageView)
-
-        }
-
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == NAV_HEADER) {
@@ -88,23 +50,54 @@ class MenuAdapter(
     }
 
     override fun getItemCount(): Int = listItem.size
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        Log.d("QQQ", "bind")
         (holder as? MenuViewHolder)?.bind()
         (holder as? HeaderViewHolder)?.bind()
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 0) {
+        return if (listItem[position].user != null) {
             NAV_HEADER
         } else NAV_MENU
     }
 
-    private fun newInstane(user: User): LoginFragment {
-        val loginFragment = LoginFragment()
-        loginFragment.arguments = Bundle().apply {
-            putParcelable(KEY, getParcelable(user.toString()))
+    inner class MenuViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        var textMenu: TextView? = null
+        var imgIcon: ImageView? = null
+
+        init {
+            textMenu = view.tvMenu
+            imgIcon = view.imgMenu
+            view.setOnClickListener {
+                setOnItemClick.invoke(adapterPosition)
+            }
         }
-        return loginFragment
+
+        fun bind() {
+            listItem[adapterPosition].let {
+                textMenu?.text = it.itemTitle
+                it.icon?.let {
+                    imgIcon?.setImageResource(it)
+                }
+            }
+        }
+
+    }
+
+    inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        fun bind() {
+            listItem[adapterPosition].user?.let {
+                itemView.tvName.text = it.userName
+                itemView.tvNick.text = it.nickName
+                Glide.with(itemView)
+                    .load(it.avatar)
+                    .centerCrop()
+                    .placeholder(R.drawable.icons_user)
+                    .into(itemView.civImageView)
+            }
+        }
+
     }
 }

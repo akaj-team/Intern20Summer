@@ -10,9 +10,17 @@ import com.asiantech.summer.R
 import com.asiantech.summer.data.ToDo
 import com.asiantech.summer.database.NoteDatabase
 import kotlinx.android.synthetic.`at-quynhho`.item_edit_to_do.*
-import kotlinx.android.synthetic.`at-quynhho`.recyclerview_item.*
 
 class EditToDoFragment : Fragment() {
+    companion object {
+        fun newInstance(toDoItem: ToDo): EditToDoFragment {
+            return EditToDoFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable("KEY_ID", toDoItem)
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,19 +33,26 @@ class EditToDoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         btEditToDo.setOnClickListener {
-            //saveToDo()
+            saveToDo()
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.flSignIn, ToDoFragment.newInstance())?.addToBackStack(null)?.commit()
         }
     }
 
-//    private fun saveToDo() {
-//        val title = tvItemTodo.text.toString()
-//        val toDo = ToDo(id = 0, todoTitle = title, isDone = true, uid = 0)
-//        context?.let {
-//            val db = NoteDatabase.newInstance(it)
-//            db?.toDoDao()?.updateTask(id, title)
-//            db?.toDoDao()?.getAllTask().let {
-//                Log.d("TAG11", "" + it?.get(it.size - 1)?.todoTitle)
-//            }
-//        }
-//    }
+    private fun saveToDo() {
+        val title = edtEditContent.text.toString()
+
+        if (title.isEmpty()){
+            return
+        }
+
+        context?.let {
+            val db = NoteDatabase.newInstance(it)
+            val todo =
+                arguments?.getParcelable<ToDo>("KEY_ID") // Lay to do tu bundle cua EditToDoFragment
+            val idTodo = todo?.id ?: 0
+            db?.toDoDao()?.updateTask(idTodo, title)
+        }
+
+    }
 }

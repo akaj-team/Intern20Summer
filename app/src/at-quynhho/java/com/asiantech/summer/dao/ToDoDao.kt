@@ -12,6 +12,9 @@ interface ToDoDao {
     @Query("SELECT * FROM todo")
     fun getAllTask(): List<ToDo>
 
+    @Query("SELECT * FROM todo WHERE user_id=:useId")
+    fun getAllTodoByUseId(useId: Int): List<ToDo>
+
     @Query("SELECT * FROM todo WHERE id = :id")
     fun findById(id: Int): ToDo
 

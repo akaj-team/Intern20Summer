@@ -10,7 +10,7 @@ import com.asiantech.summer.data.ToDo
 import com.asiantech.summer.data.User
 
 
-@Database(entities = [User::class, ToDo::class], version = 2)
+@Database(entities = [User::class, ToDo::class], version = 4)
 abstract class NoteDatabase : RoomDatabase() {
 
     companion object {

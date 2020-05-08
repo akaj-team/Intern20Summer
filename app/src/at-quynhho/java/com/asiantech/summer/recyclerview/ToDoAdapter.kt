@@ -1,45 +1,58 @@
 package com.asiantech.summer.recyclerview
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.asiantech.summer.R
 import com.asiantech.summer.data.ToDo
 import kotlinx.android.synthetic.`at-quynhho`.recyclerview_item.view.*
 
-class ItemToDoAdapter(private val toDo: MutableList<ToDo>) :
-    RecyclerView.Adapter<ItemToDoAdapter.RecyclerViewHolder?>() {
+class ToDoAdapter(private val toDo: MutableList<ToDo>) :
+    RecyclerView.Adapter<ToDoAdapter.RecyclerViewHolder?>() {
 
     internal val onItemClick: (position: Int) -> Unit = {}
     internal var onItemEditClick: (position: Int) -> Unit = {}
     internal var onItemDeleteClick: (position: Int) -> Unit = {}
     internal var onItemCheckBoxClick: (position: Int) -> Unit = {}
 
-    inner class RecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val itemToDo = view.tvItemTodo
-        val removeToDo = view.imgDelete
-        val editToDo = view.imgEdit
-        val likeToDo = view.imgYes
+    inner class RecyclerViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var itemToDo: TextView? = null
+        var removeToDo: ImageView? = null
+        var editToDo: ImageView? = null
+        var likeToDo: ImageView? = null
 
         init {
-            view.setOnClickListener {
+            itemToDo = itemView.tvItemTodo
+            removeToDo = itemView.imgDelete
+            editToDo = itemView.imgEdit
+            likeToDo = itemView.imgYes
+            itemView.setOnClickListener {
                 onItemClick.invoke(adapterPosition)
             }
-            removeToDo.setOnClickListener {
+            removeToDo?.setOnClickListener {
                 onItemDeleteClick.invoke(adapterPosition)
             }
-            editToDo.setOnClickListener {
+            editToDo?.setOnClickListener {
                 onItemEditClick.invoke(adapterPosition)
             }
-            likeToDo.setOnClickListener {
+            likeToDo?.setOnClickListener {
                 onItemCheckBoxClick.invoke(adapterPosition)
             }
         }
 
         fun bind() {
             toDo[adapterPosition].let {
-                itemToDo.text = it.todoTitle
+                itemToDo?.text = it.todoTitle
+                if (it.isDone){
+                    likeToDo?.setImageResource(R.drawable.ic_false)
+                }
+                else{
+                    likeToDo?.setImageResource(R.drawable.ic_true)
+                }
             }
 
         }
@@ -63,6 +76,5 @@ class ItemToDoAdapter(private val toDo: MutableList<ToDo>) :
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         (holder as? RecyclerViewHolder)?.bind()
     }
-
 
 }

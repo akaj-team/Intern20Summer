@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:background="@color/colorBlue"
-            android:text="@string/register"
+            android:text="@string/edit_todo"
             android:textColor="@color/colorWhite"
             android:textSize="15sp"
             app:layout_constraintLeft_toLeftOf="@id/edtPasswordEdit"

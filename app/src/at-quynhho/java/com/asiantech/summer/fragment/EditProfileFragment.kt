@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.asiantech.summer.R
+import com.asiantech.summer.SharePrefer
 import com.asiantech.summer.data.User
 import com.asiantech.summer.database.NoteDatabase
 import kotlinx.android.synthetic.`at-quynhho`.item_header_edit_profile.*
@@ -22,20 +23,22 @@ import kotlinx.android.synthetic.`at-quynhho`.item_header_edit_profile.*
 class EditProfileFragment : Fragment() {
 
     private var imageGallery: Uri? = null
-    private var editUser: User? = null
+//    private var user: Use
 
     companion object {
         private val IMAGE_CODE = 100
         private val PERMISSION_CODE = 101
         private val USER_PROFILE = "user"
-        fun newInstance(user: User): MenuFragment {
-            return MenuFragment(user).apply {
-                arguments = Bundle().apply {
-                    putParcelable(USER_PROFILE, getParcelable(user.toString()))
+        fun newInstance(user: User): EditProfileFragment {
+            return EditProfileFragment()
+                .apply {
+                    arguments = Bundle().apply {
+                        putParcelable(USER_PROFILE, user)
+                    }
                 }
-            }
         }
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,6 +70,7 @@ class EditProfileFragment : Fragment() {
         }
         btEditProfile.setOnClickListener {
             saveData()
+            activity?.supportFragmentManager?.popBackStack()
         }
 
     }
@@ -126,23 +130,25 @@ class EditProfileFragment : Fragment() {
                 return
             }
         }
-        val user = User(
-            userId = 0,
-            avatar = imgAvatar,
-            userName = edtName,
-            nickName = edtNick,
-            password = edtPass
-        )
+
+
         context?.let {
             val db = NoteDatabase.newInstance(it)
+            val sharePrefer = SharePrefer(it)
+            val userId = sharePrefer.getLogin() //get id tu share sau do edit luu vao db
+            db?.userDao()?.findUserId(id)
+            val user = User(
+                userId = userId ,
+                avatar = imgAvatar,
+                userName = edtName,
+                nickName = edtNick,
+                password = edtPass
+            )
             db?.userDao()?.updateAll(user)
             db?.userDao()?.getAll()?.let {
                 Log.d("TAG11", "" + it[it.size - 1].userName)
             }
-
         }
-        editUser = user
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.add(R.id.flSignIn, MenuFragment.newInstance(editUser!!))?.commit()
+
     }
 }

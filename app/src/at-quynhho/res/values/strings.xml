@@ -7,8 +7,10 @@
     <string name="nickname">NickName</string>
     <string name="edit_profile">Edit profile</string>
     <string name="logout">Logout</string>
-    <string name="add_todo">Add ToDo</string>
     <string name="todo">TODO</string>
+    <string name="edit_todo">Edit ToDo</string>
+    <string name="todo_content">Todo content..</string>
+    <string name="add_todo">Add ToDo</string>
     <string name="title_activity_main_to_do">MainToDoActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
