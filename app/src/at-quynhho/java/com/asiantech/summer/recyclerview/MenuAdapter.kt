@@ -1,7 +1,5 @@
 package com.asiantech.summer.recyclerview
 
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.asiantech.summer.Items
 import com.asiantech.summer.R
-import com.asiantech.summer.data.User
-import com.asiantech.summer.fragment.LoginFragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.`at-quynhho`.nav_header_to_do_main.view.*
 import kotlinx.android.synthetic.`at-quynhho`.nav_menu_to_do_main.view.*
@@ -27,7 +23,6 @@ class MenuAdapter(
         private var NAV_HEADER = 0
         private var NAV_MENU = 1
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == NAV_HEADER) {
@@ -82,11 +77,9 @@ class MenuAdapter(
                 }
             }
         }
-
     }
 
     inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         fun bind() {
             listItem[adapterPosition].user?.let {
                 itemView.tvName.text = it.userName
@@ -98,6 +91,5 @@ class MenuAdapter(
                     .into(itemView.civImageView)
             }
         }
-
     }
 }

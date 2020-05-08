@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.`at-quynhho`.recyclerview_item.view.*
 class ToDoAdapter(private val toDo: MutableList<ToDo>) :
     RecyclerView.Adapter<ToDoAdapter.RecyclerViewHolder?>() {
 
-    internal val onItemClick: (position: Int) -> Unit = {}
+    internal val onItemClick: (position: Int) -> Unit = {} //goi 1 nut tai 1 vi vi do tra ve kieu do
     internal var onItemEditClick: (position: Int) -> Unit = {}
     internal var onItemDeleteClick: (position: Int) -> Unit = {}
     internal var onItemCheckBoxClick: (position: Int) -> Unit = {}
@@ -30,7 +30,7 @@ class ToDoAdapter(private val toDo: MutableList<ToDo>) :
             editToDo = itemView.imgEdit
             likeToDo = itemView.imgYes
             itemView.setOnClickListener {
-                onItemClick.invoke(adapterPosition)
+                onItemClick.invoke(adapterPosition) //xet khi click nut do
             }
             removeToDo?.setOnClickListener {
                 onItemDeleteClick.invoke(adapterPosition)
@@ -46,7 +46,7 @@ class ToDoAdapter(private val toDo: MutableList<ToDo>) :
         fun bind() {
             toDo[adapterPosition].let {
                 itemToDo?.text = it.todoTitle
-                if (it.isDone){
+                if (it.isDone){ //xet isDone true
                     likeToDo?.setImageResource(R.drawable.ic_false)
                 }
                 else{

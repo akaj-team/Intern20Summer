@@ -1,9 +1,6 @@
 package com.asiantech.summer.fragment
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +14,6 @@ import com.asiantech.summer.SharePrefer
 import com.asiantech.summer.database.NoteDatabase
 import com.asiantech.summer.recyclerview.MenuAdapter
 import kotlinx.android.synthetic.`at-quynhho`.fragment_menu_to_do.*
-
 
 class MenuFragment : Fragment() {
 
@@ -34,11 +30,9 @@ class MenuFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return inflater.inflate(R.layout.fragment_menu_to_do, container, false)
     }
 
-    @SuppressLint("WrongConstant")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         imgDrawer.setOnClickListener {
@@ -59,24 +53,18 @@ class MenuFragment : Fragment() {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
     private fun initData() {
-        // Get id user
-        val sharePrefer = SharePrefer(this.context!!)
+        val sharePrefer = SharePrefer(this.context!!)  // Get id user
         val userId = sharePrefer.getLogin()
         rvMenuDrawer.apply {
             val db = NoteDatabase.newInstance(context = context)
-            val user = db?.userDao()?.findUserId(userId)
-            Log.d("TAG11", "" + this)
+            val user = db?.userDao()?.findUserId(userId) //lay id tu db user
             layoutManager =
                 LinearLayoutManager(this@MenuFragment.context, LinearLayoutManager.VERTICAL, false)
             listItem.apply {
                 clear()
-                add(Items(user, null, null))
-                add(Items(null, R.drawable.ic_profile, "Edit profile"))
+                add(Items(user, null, null)) //user!! thi ien header
+                add(Items(null, R.drawable.ic_profile, "Edit profile")) //user= null thi hien menu
                 add(Items(null, R.drawable.ic_add, "Add To Do"))
                 add(Items(null, R.drawable.ic_speak, "Logout"))
             }

@@ -11,7 +11,6 @@ import com.asiantech.summer.SharePrefer
 import com.asiantech.summer.database.NoteDatabase
 import kotlinx.android.synthetic.`at-quynhho`.fragment_login.*
 
-
 class LoginFragment : Fragment() {
 
     override fun onCreateView(

@@ -19,11 +19,9 @@ import com.asiantech.summer.data.User
 import com.asiantech.summer.database.NoteDatabase
 import kotlinx.android.synthetic.`at-quynhho`.fragment_register.*
 
-
 class RegisterFragment : Fragment() {
 
     private var imageGallery: Uri? = null
-
     companion object {
         private val IMAGE_CODE = 100
         private val PERMISSION_CODE = 101
@@ -83,23 +81,19 @@ class RegisterFragment : Fragment() {
             Log.d("images", "Select From Image Gallery: " + imageGallery.toString())
             civAvatar.setImageURI(imageGallery)
         }
-
     }
 
     private fun pickImageFromGalley() {
-
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_CODE)
     }
 
     private fun saveData() {
-
         val imgAvatar = imageGallery.toString()
         val edtName = edtUserName.text.toString()
         val edtNick = edtNickName.text.toString()
         val edtPass = edtPassword.text.toString()
-
         when {
             imgAvatar.isEmpty() -> {
                 civAvatar.requestFocus()
@@ -136,6 +130,5 @@ class RegisterFragment : Fragment() {
             }
         }
         activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.flSignIn, LoginFragment())?.commit()
-
     }
 }

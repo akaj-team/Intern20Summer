@@ -23,22 +23,19 @@ import kotlinx.android.synthetic.`at-quynhho`.item_header_edit_profile.*
 class EditProfileFragment : Fragment() {
 
     private var imageGallery: Uri? = null
-//    private var user: Use
 
     companion object {
         private val IMAGE_CODE = 100
         private val PERMISSION_CODE = 101
         private val USER_PROFILE = "user"
         fun newInstance(user: User): EditProfileFragment {
-            return EditProfileFragment()
-                .apply {
-                    arguments = Bundle().apply {
-                        putParcelable(USER_PROFILE, user)
-                    }
+            return EditProfileFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(USER_PROFILE, user)
                 }
+            }
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,7 +96,6 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun pickImageFromGalley() {
-
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, IMAGE_CODE)
@@ -137,16 +133,14 @@ class EditProfileFragment : Fragment() {
             val userId = sharePrefer.getLogin() //get id tu share sau do edit luu vao db
             db?.userDao()?.findUserId(id)
             val user = User(
-                userId = userId ,
+                userId = userId,
                 avatar = imgAvatar,
                 userName = edtName,
                 nickName = edtNick,
                 password = edtPass
             )
             db?.userDao()?.updateAll(user)
-            db?.userDao()?.getAll()?.let {
-                Log.d("TAG11", "" + it[it.size - 1].userName)
-            }
+            db?.userDao()?.getAll()
         }
     }
 }

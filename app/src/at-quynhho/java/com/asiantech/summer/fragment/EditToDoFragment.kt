@@ -41,11 +41,9 @@ class EditToDoFragment : Fragment() {
 
     private fun saveToDo() {
         val title = edtEditContent.text.toString()
-
         if (title.isEmpty()){
             return
         }
-
         context?.let {
             val db = NoteDatabase.newInstance(it)
             val todo =
