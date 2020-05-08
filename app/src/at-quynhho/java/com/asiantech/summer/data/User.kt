@@ -1,8 +1,6 @@
 package com.asiantech.summer.data
 
-import android.os.Parcel
 import android.os.Parcelable
-import android.text.Editable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey

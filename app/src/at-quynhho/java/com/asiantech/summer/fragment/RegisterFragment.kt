@@ -134,8 +134,8 @@ class RegisterFragment : Fragment() {
             db?.userDao()?.getAll()?.let {
                 Log.d("TAG11", "" + it[it.size - 1].userName)
             }
-
         }
+        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.flSignIn, LoginFragment())?.commit()
 
     }
 }

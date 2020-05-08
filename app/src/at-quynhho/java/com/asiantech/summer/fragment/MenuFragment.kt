@@ -1,31 +1,28 @@
 package com.asiantech.summer.fragment
 
-import android.net.Uri
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.forEach
-import androidx.core.view.get
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asiantech.summer.Items
 import com.asiantech.summer.R
 import com.asiantech.summer.SharePrefer
-import com.asiantech.summer.data.ToDo
-import com.asiantech.summer.data.User
 import com.asiantech.summer.database.NoteDatabase
 import com.asiantech.summer.recyclerview.MenuAdapter
 import kotlinx.android.synthetic.`at-quynhho`.fragment_menu_to_do.*
-import kotlinx.android.synthetic.`at-quynhho`.item_header_edit_profile.*
-import kotlinx.android.synthetic.`at-quynhho`.nav_header_to_do_main.view.*
+
 
 class MenuFragment : Fragment() {
 
     private lateinit var menuAdapter: MenuAdapter
     private var listItem = ArrayList<Items>()
-//    private var listToDo = mutableListOf<ToDo>()
 
     companion object {
         fun newInstance(): MenuFragment {
@@ -37,11 +34,21 @@ class MenuFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.fragment_menu_to_do, container, false)
     }
 
+    @SuppressLint("WrongConstant")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        imgDrawer.setOnClickListener {
+            val navDrawer: DrawerLayout = view.findViewById(R.id.drawer_layout)
+            if (!navDrawer.isDrawerOpen(Gravity.LEFT)) {
+                navDrawer.openDrawer(Gravity.LEFT)
+            } else {
+                navDrawer.closeDrawer(Gravity.LEFT)
+            }
+        }
         initData()
         // Get user sql
         listItem[0]
@@ -50,6 +57,10 @@ class MenuFragment : Fragment() {
                 ?.replace(R.id.flToDo, ToDoFragment())?.commit()
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun initData() {
@@ -90,6 +101,5 @@ class MenuFragment : Fragment() {
                 menuAdapter.notifyDataSetChanged()
             }
         }
-
     }
 }

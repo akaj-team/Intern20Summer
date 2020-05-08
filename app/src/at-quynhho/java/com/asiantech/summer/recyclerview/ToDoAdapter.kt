@@ -1,6 +1,5 @@
 package com.asiantech.summer.recyclerview
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,5 +75,4 @@ class ToDoAdapter(private val toDo: MutableList<ToDo>) :
     override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
         (holder as? RecyclerViewHolder)?.bind()
     }
-
 }

@@ -26,12 +26,6 @@ class SharePrefer(val context: Context) {
         return sharedPreferences.getInt("id", -1)
     }
 
-    fun getUserName(): String? {
-        val sharedPreferences: SharedPreferences =
-            context.getSharedPreferences(SHARE_PREFER, Context.MODE_PRIVATE)
-        return sharedPreferences.getString("UserName", "")
-    }
-
     fun isUserLogOut(): Boolean {
         val sharedPreferences: SharedPreferences =
             context.getSharedPreferences(SHARE_PREFER, Context.MODE_PRIVATE)

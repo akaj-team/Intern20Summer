@@ -42,7 +42,7 @@ class ToDoFragment : Fragment() {
         initData()
         toDoAdapter?.run {
             onItemCheckBoxClick = {
-                toDoList.get(it).isDone = !(toDoList.get(it).isDone)
+                toDoList.get(it).isDone = !(toDoList.get(it).isDone) //xet su kien cho nut, neu true, neu false doi mau
                 //toDoList?.get(it)?.isDone = !(toDoList?.get(it)?.isDone ?: false)
                 notifyItemChanged(it)
             }
@@ -80,7 +80,6 @@ class ToDoFragment : Fragment() {
                     db?.toDoDao()?.getAllTodoByUseId(sharePrefer.getLogin()) ?: mutableListOf()
                 )
         }
-
         toDoAdapter?.notifyDataSetChanged()
     }
 }

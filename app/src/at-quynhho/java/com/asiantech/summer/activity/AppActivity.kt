@@ -2,12 +2,12 @@ package com.asiantech.summer.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar;
 import com.asiantech.summer.R
 import com.asiantech.summer.SharePrefer
 import com.asiantech.summer.data.User
 import com.asiantech.summer.fragment.LoginFragment
 import com.asiantech.summer.fragment.MenuFragment
-import com.asiantech.summer.fragment.ToDoFragment
 
 class AppActivity : AppCompatActivity() {
 
@@ -33,3 +33,4 @@ class AppActivity : AppCompatActivity() {
         }
     }
 }
+

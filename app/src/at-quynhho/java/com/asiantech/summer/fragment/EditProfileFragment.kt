@@ -131,7 +131,6 @@ class EditProfileFragment : Fragment() {
             }
         }
 
-
         context?.let {
             val db = NoteDatabase.newInstance(it)
             val sharePrefer = SharePrefer(it)
@@ -149,6 +148,5 @@ class EditProfileFragment : Fragment() {
                 Log.d("TAG11", "" + it[it.size - 1].userName)
             }
         }
-
     }
 }
