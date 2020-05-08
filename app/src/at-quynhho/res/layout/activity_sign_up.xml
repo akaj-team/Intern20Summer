@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.asiantech.SignUpActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_background_edittop">
+
+        <TextView
+            android:id="@+id/tvBgSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/sign_up"
+            android:textColor="@color/colorWhite"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="580dp"
+            android:layout_marginTop="90dp"
+            android:background="@drawable/ic_background_editbottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvBgSignup">
+
+            <TextView
+                android:id="@+id/tvFbSgup"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/ic_background_fb"
+                android:gravity="center"
+                android:text="@string/sign_in_with_facebook"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imgFb"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_fb"
+                app:layout_constraintLeft_toLeftOf="@id/tvFbSgup"
+                app:layout_constraintTop_toTopOf="@id/tvFbSgup" />
+
+            <TextView
+                android:id="@+id/tvTwSup"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/ic_background_tw"
+                android:gravity="center"
+                android:text="@string/sign_in_with_twitter"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvFbSgup" />
+
+            <ImageView
+                android:id="@+id/imgTw"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_twitter"
+                app:layout_constraintLeft_toLeftOf="@id/tvTwSup"
+                app:layout_constraintTop_toTopOf="@id/tvTwSup" />
+
+            <TextView
+                android:id="@+id/tvGgSup"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/ic_background_yt"
+                android:gravity="center"
+                android:text="@string/sign_in_with_google"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvTwSup" />
+
+            <ImageView
+                android:id="@+id/imgGg"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_google"
+                app:layout_constraintLeft_toLeftOf="@id/tvGgSup"
+                app:layout_constraintTop_toTopOf="@id/tvGgSup" />
+
+            <TextView
+                android:id="@+id/tvOr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="65dp"
+                android:text="Or"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/imgGg" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="75dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/colorPrimaryDark"
+                app:layout_constraintLeft_toLeftOf="@id/tvGgSup"
+                app:layout_constraintRight_toLeftOf="@id/tvOr"
+                app:layout_constraintTop_toTopOf="@id/tvGgSup" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="75dp"
+                android:layout_marginRight="60dp"
+                android:background="@color/colorPrimaryDark"
+                app:layout_constraintLeft_toRightOf="@id/tvOr"
+                app:layout_constraintRight_toRightOf="@id/tvGgSup"
+                app:layout_constraintTop_toTopOf="@id/tvGgSup" />
+
+            <EditText
+                android:id="@+id/tvusersignup"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/ic_background_login"
+                android:gravity="center|left"
+                android:hint="@string/email_of_mobile_number"
+                android:paddingLeft="20dp"
+                android:textColor="@color/colorGrey"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvOr" />
+
+            <EditText
+                android:id="@+id/tvpasssignup"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/ic_background_login"
+                android:gravity="center|left"
+                android:hint="@string/password"
+                android:paddingLeft="20dp"
+                android:textColor="@color/colorGrey"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvusersignup" />
+
+            <EditText
+                android:id="@+id/tvConfpass"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/ic_background_login"
+                android:gravity="center|left"
+                android:hint="@string/confirm_password"
+                android:paddingLeft="20dp"
+                android:textColor="@color/colorGrey"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvpasssignup" />
+
+            <CheckBox
+                android:id="@+id/cbAgre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="55dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/cbAgre"
+                app:layout_constraintTop_toTopOf="@id/tvConfpass" />
+
+            <TextView
+                android:id="@+id/tvAgr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:text="I agree to our Terms and Conditions Agreement."
+                android:textColor="@color/colorGrey"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="@id/cbAgre"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvConfpass"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tvButtonSp"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/ic_background_button"
+                android:gravity="center"
+                android:text="@string/sign_up"
+                android:textColor="@color/colorBlue"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvAgr" />
+
+            <TextView
+                android:id="@+id/tvAcc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="60dp"
+                android:text="Already have account?"
+                android:textColor="@color/colorGrey"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvButtonSp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tvSigin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="120dp"
+                android:text="@string/sign_in"
+                android:textColor="@color/colorBlue"
+                android:textSize="14sp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvButtonSp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
