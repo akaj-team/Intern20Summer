@@ -3,7 +3,6 @@ package com.asiantech.summer
 import android.content.Context
 import android.content.SharedPreferences
 
-
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class SharePrefer(val context: Context) {
 

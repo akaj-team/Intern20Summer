@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.`at-quynhho`.fragment_register.*
 class RegisterFragment : Fragment() {
 
     private var imageGallery: Uri? = null
+
     companion object {
         private val IMAGE_CODE = 100
         private val PERMISSION_CODE = 101
@@ -115,20 +116,15 @@ class RegisterFragment : Fragment() {
                 return
             }
         }
-        val user = User(
-            userId = 0,
-            avatar = imgAvatar,
-            userName = edtName,
-            nickName = edtNick,
-            password = edtPass
-        )
+        val user = User( userId = 0, avatar = imgAvatar, userName = edtName, nickName = edtNick, password = edtPass)
         context?.let {
             val db = NoteDatabase.newInstance(it)
-            db?.userDao()?.insertAll(user)
+            db?.userDao()?.insertAll(user) //insert vao db user
             db?.userDao()?.getAll()?.let {
                 Log.d("TAG11", "" + it[it.size - 1].userName)
             }
         }
-        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.flSignIn, LoginFragment())?.commit()
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.flSignIn, LoginFragment())?.commit()
     }
 }

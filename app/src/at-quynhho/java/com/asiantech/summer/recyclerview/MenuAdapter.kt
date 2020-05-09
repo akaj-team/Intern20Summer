@@ -12,12 +12,9 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.`at-quynhho`.nav_header_to_do_main.view.*
 import kotlinx.android.synthetic.`at-quynhho`.nav_menu_to_do_main.view.*
 
-class MenuAdapter(
-    private val listItem: ArrayList<Items>
-) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
+class MenuAdapter(private val listItem: ArrayList<Items>) : RecyclerView.Adapter<RecyclerView.ViewHolder?>() {
 
-    var setOnItemClick: (position: Int) -> Unit? = {}
+    internal var setOnItemClick: (position: Int) -> Unit? = {}
 
     companion object {
         private var NAV_HEADER = 0
@@ -34,13 +31,7 @@ class MenuAdapter(
                 )
             )
         } else {
-            MenuViewHolder(
-                LayoutInflater.from(parent.context).inflate(
-                    R.layout.nav_menu_to_do_main,
-                    parent,
-                    false
-                )
-            )
+            MenuViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.nav_menu_to_do_main, parent, false))
         }
     }
 

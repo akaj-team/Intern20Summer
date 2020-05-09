@@ -1,7 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,6 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="40dp"
             android:background="@color/cardview_light_background"
+            android:gravity="center"
             android:text="@string/login"
             android:textColor="@color/colorBlue"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="40dp"
             android:background="@color/colorLightBlue"
+            android:gravity="center"
             android:text="@string/register"
             android:textColor="@color/colorWhite"
             app:layout_constraintRight_toRightOf="parent"

@@ -47,7 +47,6 @@ class EditProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         civAvatarEdit.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (ContextCompat.checkSelfPermission(
@@ -92,7 +91,6 @@ class EditProfileFragment : Fragment() {
             Log.d("images", "Select From Image Gallery: " + imageGallery.toString())
             civAvatarEdit.setImageURI(imageGallery)
         }
-
     }
 
     private fun pickImageFromGalley() {
@@ -102,7 +100,6 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun saveData() {
-
         val imgAvatar = imageGallery.toString()
         val edtName = edtUserNameEdit.text.toString()
         val edtNick = edtNickNameEdit.text.toString()
@@ -126,7 +123,6 @@ class EditProfileFragment : Fragment() {
                 return
             }
         }
-
         context?.let {
             val db = NoteDatabase.newInstance(it)
             val sharePrefer = SharePrefer(it)

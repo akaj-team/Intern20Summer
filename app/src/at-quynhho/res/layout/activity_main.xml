@@ -5,5 +5,4 @@
     android:layout_height="match_parent"
     tools:context="com.asiantech.summer.activity.AppActivity">
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

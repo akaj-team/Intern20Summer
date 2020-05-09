@@ -1,13 +1,11 @@
 package com.asiantech.summer.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.asiantech.summer.R
 import com.asiantech.summer.SharePrefer
 import com.asiantech.summer.data.ToDo
@@ -64,7 +62,7 @@ class ToDoFragment : Fragment() {
         }
     }
 
-    fun initData() {
+    private fun initData() {
         rvTodo.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             toDoAdapter = ToDoAdapter(toDoList)
@@ -73,7 +71,7 @@ class ToDoFragment : Fragment() {
         }
     }
 
-    fun loadData() {
+    private fun loadData() {
         context?.let {
             val sharePrefer = SharePrefer(it)
             db = NoteDatabase.newInstance(it)

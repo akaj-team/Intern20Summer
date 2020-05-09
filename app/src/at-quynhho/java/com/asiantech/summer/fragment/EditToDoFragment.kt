@@ -1,7 +1,6 @@
 package com.asiantech.summer.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +50,5 @@ class EditToDoFragment : Fragment() {
             val idTodo = todo?.id ?: 0
             db?.toDoDao()?.updateTask(idTodo, title)
         }
-
     }
 }

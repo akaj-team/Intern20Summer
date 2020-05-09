@@ -10,8 +10,7 @@ import com.asiantech.summer.R
 import com.asiantech.summer.data.ToDo
 import kotlinx.android.synthetic.`at-quynhho`.recyclerview_item.view.*
 
-class ToDoAdapter(private val toDo: MutableList<ToDo>) :
-    RecyclerView.Adapter<ToDoAdapter.RecyclerViewHolder?>() {
+class ToDoAdapter(private val toDo: MutableList<ToDo>) : RecyclerView.Adapter<ToDoAdapter.RecyclerViewHolder?>() {
 
     internal val onItemClick: (position: Int) -> Unit = {} //goi 1 nut tai 1 vi vi do tra ve kieu do
     internal var onItemEditClick: (position: Int) -> Unit = {}
@@ -61,13 +60,7 @@ class ToDoAdapter(private val toDo: MutableList<ToDo>) :
         parent: ViewGroup,
         viewType: Int
     ): RecyclerViewHolder {
-        return RecyclerViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.recyclerview_item,
-                parent,
-                false
-            )
-        )
+        return RecyclerViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item, parent, false))
     }
 
     override fun getItemCount(): Int = toDo.size

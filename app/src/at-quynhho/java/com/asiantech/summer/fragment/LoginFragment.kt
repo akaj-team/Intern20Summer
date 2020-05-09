@@ -34,7 +34,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkLogin() {
-
         val edtName = edtUserName.text.toString()
         val edtPass = edtPassword.text.toString()
         when {
