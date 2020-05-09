@@ -4,9 +4,9 @@ import com.asiantech.summer.R
 
 class DataConversation {
     companion object {
-        fun initDataInfoMess(): ArrayList<Conversation> {
-            var listInformationMessUser = ArrayList<Conversation>()
-            listInformationMessUser.add(
+        fun initDataConversation(): ArrayList<Conversation> {
+            val conversation = ArrayList<Conversation>()
+            conversation.add(
                 Conversation(
                     R.drawable.ic_person1,
                     "Chirstoph",
@@ -14,7 +14,7 @@ class DataConversation {
                     isLike = true
                 )
             )
-            listInformationMessUser.add(
+            conversation.add(
                 Conversation(
                     R.drawable.ic_person2,
                     "Chirstoph",
@@ -22,49 +22,49 @@ class DataConversation {
                     isLike = false
                 )
             )
-            listInformationMessUser.add(
+            conversation.add(
                 Conversation(
                     R.drawable.ic_person3,
                     "Chirstoph",
                     "Sounds good to me!", 0, isLike = false
                 )
             )
-            listInformationMessUser.add(
+            conversation.add(
                 Conversation(
                     R.drawable.ic_person4,
                     "Chirstoph",
                     "Hi Tina. How's you night going", 0, isLike = true
                 )
             )
-            listInformationMessUser.add(
+            conversation.add(
                 Conversation(
                     R.drawable.ic_person5,
                     "Chirstoph",
                     "Hey girl!", 0, isLike = false
                 )
             )
-            listInformationMessUser.add(
+            conversation.add(
                 Conversation(
                     R.drawable.ic_person6,
                     "Chirstoph",
                     "Where does it come from?", 0, isLike = true
                 )
             )
-            listInformationMessUser.add(
+            conversation.add(
                 Conversation(
                     R.drawable.ic_person7,
                     "Chirstoph",
                     "Where can I get some?", 0, isLike = true
                 )
             )
-            listInformationMessUser.add(
+            conversation.add(
                 Conversation(
                     R.drawable.ic_person1,
                     "Chirstoph",
                     "It is a long established fact that", 2, isLike = false
                 )
             )
-            return listInformationMessUser
+            return conversation
         }
 
     }

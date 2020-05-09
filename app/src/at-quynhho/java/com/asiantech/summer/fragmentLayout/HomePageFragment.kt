@@ -8,16 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asiantech.summer.R
 import com.asiantech.summer.data.DataConversation
-import com.asiantech.summer.data.DataUserOnline
+import com.asiantech.summer.data.DataUser
 import com.asiantech.summer.recyclerView.ConversationAdapter
-import com.asiantech.summer.recyclerView.UserOnlineAdapter
+import com.asiantech.summer.recyclerView.UserAdapter
 import kotlinx.android.synthetic.`at-quynhho`.fragment_menu_message.*
 
 class HomePageFragment : Fragment() {
 
-    lateinit var adapterUserOn: UserOnlineAdapter
+    lateinit var adapterUserOn: UserAdapter
     lateinit var adapterConversation: ConversationAdapter
-    private var conversations = DataConversation.initDataInfoMess()
+    private var conversations = DataConversation.initDataConversation()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,12 +26,11 @@ class HomePageFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_menu_message, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rvListChat.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapterUserOn = UserOnlineAdapter()
+            adapterUserOn = UserAdapter()
             adapter = adapterUserOn
         }
         addDataUserOnline()
@@ -65,7 +64,7 @@ class HomePageFragment : Fragment() {
     }
 
     private fun addDataUserOnline() {
-        val data = DataUserOnline.initDataOnline()
+        val data = DataUser.initDataUser()
         adapterUserOn.submitList(data)
     }
 

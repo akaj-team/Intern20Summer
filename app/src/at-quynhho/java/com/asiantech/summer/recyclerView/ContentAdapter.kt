@@ -22,31 +22,6 @@ class ContentAdapter(private val message: MutableList<DataMessage>) :
         private const val TIME_MESSAGE = 3
     }
 
-    inner class TimeMessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private var timeText: TextView = view.tvOtherMessageTime
-        fun bind(message: MutableList<DataMessage>) {
-            val currentTime: String =
-                SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
-            timeText.text = currentTime
-        }
-    }
-
-    inner class MyMessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private var messageText: TextView = view.tvMyConversation
-
-        fun bind(message: MutableList<DataMessage>) {
-            messageText.text = message[adapterPosition].message
-        }
-    }
-
-    inner class OtherMessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private var messageText: TextView = view.tvPersonConversation
-
-        fun bind(message: MutableList<DataMessage>) {
-            messageText.text = message[adapterPosition].message
-        }
-    }
-
     override fun getItemCount() = message.size + 1
 
     override fun getItemViewType(position: Int): Int {
@@ -93,5 +68,29 @@ class ContentAdapter(private val message: MutableList<DataMessage>) :
         (holder as? TimeMessageViewHolder)?.bind(message)
     }
 
+    inner class TimeMessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private var timeText: TextView = view.tvOtherMessageTime
+        fun bind(message: MutableList<DataMessage>) {
+            val currentTime: String =
+                SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
+            timeText.text = currentTime
+        }
+    }
+
+    inner class MyMessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private var messageText: TextView = view.tvMyConversation
+
+        fun bind(message: MutableList<DataMessage>) {
+            messageText.text = message[adapterPosition].message
+        }
+    }
+
+    inner class OtherMessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private var messageText: TextView = view.tvPersonConversation
+
+        fun bind(message: MutableList<DataMessage>) {
+            messageText.text = message[adapterPosition].message
+        }
+    }
 }
 

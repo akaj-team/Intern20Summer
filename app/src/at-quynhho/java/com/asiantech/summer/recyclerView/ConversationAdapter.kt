@@ -14,6 +14,22 @@ class ConversationAdapter(private var itemsInfo: List<Conversation>) :
     internal var userChatClicked: (position: Int) -> Unit = {}
     internal var onStartClick: (position: Int) -> Unit = {}
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerInfoViewHolder {
+        return RecyclerInfoViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_conversation,
+                parent,
+                false
+            )
+        )
+    }
+
+    override fun getItemCount(): Int = itemsInfo.size
+
+    override fun onBindViewHolder(holder: RecyclerInfoViewHolder, position: Int) {
+        (holder as? RecyclerInfoViewHolder)?.bind(itemsInfo[position])
+    }
+
     inner class RecyclerInfoViewHolder constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         val avatarUserMess = itemView.civAvatarUserMess
@@ -45,26 +61,7 @@ class ConversationAdapter(private var itemsInfo: List<Conversation>) :
             Glide.with(itemView.context)
                 .load(conversation.avatarUser)
                 .into(avatarUserMess)
-
         }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerInfoViewHolder {
-        return RecyclerInfoViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_conversation,
-                parent,
-                false
-            )
-        )
-    }
-
-    override fun getItemCount(): Int {
-        return itemsInfo.size
-    }
-
-    override fun onBindViewHolder(holder: RecyclerInfoViewHolder, position: Int) {
-        (holder as? RecyclerInfoViewHolder)?.bind(itemsInfo[position])
     }
 }
 

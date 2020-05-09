@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asiantech.summer.R
-import com.asiantech.summer.data.UserOnline
+import com.asiantech.summer.data.User
 import com.asiantech.summer.recyclerView.SearchAdapter
 import kotlinx.android.synthetic.`at-quynhho`.item_list_user.*
 
 class ListUserFragment : Fragment() {
 
     lateinit var adapterUser: SearchAdapter
-    var listUserMessOn = ArrayList<UserOnline>()
+    var listUser = ArrayList<User>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,21 +37,21 @@ class ListUserFragment : Fragment() {
         }
     }
 
-    fun initAdapter() {
+    private fun initAdapter() {
         rvListUser.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapterUser = SearchAdapter(listUserMessOn)
+            adapterUser = SearchAdapter(listUser)
             adapter = adapterUser
         }
     }
 
-    fun initData() {
-        listUserMessOn.add(UserOnline(R.drawable.ic_person1, "Christoph"))
-        listUserMessOn.add(UserOnline(R.drawable.ic_person2, "Eugenia"))
-        listUserMessOn.add(UserOnline(R.drawable.ic_person3, "Jeffrey"))
-        listUserMessOn.add(UserOnline(R.drawable.ic_person4, "Laura"))
-        listUserMessOn.add(UserOnline(R.drawable.ic_person5, "Violet"))
-        listUserMessOn.add(UserOnline(R.drawable.ic_person6, "Selena"))
-        listUserMessOn.add(UserOnline(R.drawable.ic_person7, "Violet"))
+    private fun initData() {
+        listUser.add(User(R.drawable.ic_person1, "Christoph"))
+        listUser.add(User(R.drawable.ic_person2, "Eugenia"))
+        listUser.add(User(R.drawable.ic_person3, "Jeffrey"))
+        listUser.add(User(R.drawable.ic_person4, "Laura"))
+        listUser.add(User(R.drawable.ic_person5, "Violet"))
+        listUser.add(User(R.drawable.ic_person6, "Selena"))
+        listUser.add(User(R.drawable.ic_person7, "Violet"))
     }
 }
