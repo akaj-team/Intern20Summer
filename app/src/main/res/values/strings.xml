@@ -4,4 +4,6 @@
     <string name="step_1">Step 1</string>
     <string name="step_2">Step 2</string>
     <string name="step_3">Step 3</string>
+    <string name="progress_asynctack_handler">Progress AsyncTack Handler</string>
+    <string name="start">Start</string>
 </resources>
