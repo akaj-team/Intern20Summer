@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.asiantech.summer.HandlerThreadActivity">
+    tools:context="com.asiantech.summer.AyncTaskActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -34,7 +34,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="40dp"
             android:gravity="center"
-            android:text="Download file"
+            android:text="Downnload file"
             android:textColor="@color/colorBlack"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -42,20 +42,20 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="5dp"
-            android:indeterminate="false"
-            android:max="100"
-            android:progress="1"
-            android:progressBackgroundTint="@color/colorWhite"
-            android:progressTint="@color/colorAccent"
-            app:layout_constraintTop_toBottomOf="@id/tvDownload" />
+<!--        <ProgressBar-->
+<!--            android:id="@+id/progressBar"-->
+<!--            style="?android:progressBarStyleHorizontal"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:layout_marginRight="5dp"-->
+<!--            android:indeterminate="false"-->
+<!--            android:max="100"-->
+<!--            android:progress="1"-->
+<!--            android:progressBackgroundTint="@color/colorWhite"-->
+<!--            android:progressTint="@color/colorAccent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/tvDownload" />-->
 
         <Button
             android:id="@+id/btStart"
@@ -68,17 +68,29 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/progressBar" />
+            app:layout_constraintTop_toBottomOf="@id/tvDownload" />
 
-
-        <ImageView
-            android:id="@+id/imageView"
+        <TextView
+            android:id="@+id/tvProgress"
+            android:layout_width="350dp"
+            android:layout_height="60dp"
             android:layout_marginTop="40dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:gravity="center"
+            android:paddingTop="40dp"
+            android:textColor="@color/colorLightBlue"
+            android:textSize="20dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btStart" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvProgress" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
