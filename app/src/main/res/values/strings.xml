@@ -6,4 +6,5 @@
     <string name="step_3">Step 3</string>
     <string name="progress_asynctack_handler">Progress AsyncTack Handler</string>
     <string name="start">Start</string>
+    <string name="download_file">Download file</string>
 </resources>

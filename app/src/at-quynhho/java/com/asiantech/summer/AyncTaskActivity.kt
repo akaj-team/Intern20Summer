@@ -21,9 +21,9 @@ class AyncTaskActivity : AppCompatActivity() {
 
     lateinit var dialog: ProgressDialog
 
-
     companion object {
-        private var FILD_URL = "https://kynguyenlamdep.com/wp-content/uploads/2020/01/hinh-anh-dep-hoa-bo-cong-anh.jpg"
+        private var FILD_URL =
+            "https://kynguyenlamdep.com/wp-content/uploads/2020/01/hinh-anh-dep-hoa-bo-cong-anh.jpg"
         private var PROGRESS_BAR = 0
     }
 
@@ -63,13 +63,12 @@ class AyncTaskActivity : AppCompatActivity() {
 
         override fun doInBackground(vararg fileUrl: String): String {
 
-            var count : Int
+            var count: Int
             try {
                 val url = URL(fileUrl[0])
                 val connection: URLConnection = url.openConnection()
                 connection.doInput = true
                 connection.connect()
-                Log.d("AAA", "total: $connection")
                 val lenghtFile: Int = connection.contentLength
                 val input: InputStream = BufferedInputStream(url.openStream(), 8192)
                 val storageDir: String =

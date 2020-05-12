@@ -6,10 +6,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.graphics.drawable.Drawable
-import android.os.Bundle
-import android.os.Environment
-import android.os.Handler
-import android.os.Message
+import android.os.*
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.`at-quynhho`.activity_download.btStart
@@ -34,17 +31,17 @@ class HandlerThreadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_download)
 
-
         btStart.setOnClickListener {
             onClickDownload()
             handler = @SuppressLint("HandlerLeak")
             object : Handler() {
                 override fun handleMessage(msg: Message?) {
                     super.handleMessage(msg)
-                    dismissDialog(PROGRESS_BAR)
+
                     val imagePath =
                         Environment.getExternalStorageDirectory().toString() + "/downloadimgthreadfile.jpg"
                     imageView.setImageDrawable(Drawable.createFromPath(imagePath))
+                    dialog.dismiss()
                 }
             }
         }
@@ -71,38 +68,47 @@ class HandlerThreadActivity : AppCompatActivity() {
     private fun onClickDownload() {
         onDialog(PROGRESS_BAR)
         Thread(Runnable {
-            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND)
+            Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND)
             try {
                 while (dialog.progress <= dialog.max) {
-                    imageView.post {
-                        dialog.incrementProgressBy(1)
-                        if (dialog.progress == dialog.max) {
+                    dialog.incrementProgressBy(1)
+                    if (dialog.progress == dialog.max) {
 
-                            val url = URL(FILE_URL)
-                            val connection: URLConnection = url.openConnection()
-                            connection.doInput = true
-                            connection.connect()
-                            val lengthFile: Int = connection.contentLength
-                            val input: InputStream = BufferedInputStream(url.openStream())
-                            val fileName = "/downloadimgthreadfile.jpg"
-                            val storageDir: String = Environment.getExternalStorageState()
-                            val imageFile = File(storageDir + fileName)
-                            val output: OutputStream = FileOutputStream(imageFile)
-                            val data = ByteArray(1024)
-                            var count: Int
-                            var total: Long = 0
-                            while (input.read(data).also { count = it } != -1) {
-                                total += count.toLong()
-                                val loadNum: Int = (total * 100 / lengthFile).toInt()
-                                setProgressDialogValue(loadNum)
-                                output.write(data, 0, count)
+                        val url = URL(FILE_URL)
+                        val connection: URLConnection = url.openConnection()
+                        connection.doInput = true
+                        connection.connect()
+                        val lengthFile: Int = connection.contentLength
+
+                        val fileName = "/downloadimgthreadfile.jpg"
+                        val storageDir: File =
+                            Environment.getExternalStorageDirectory()
+                    //    if(!storageDir.exists()){
+                            storageDir.mkdirs()
+
+                        val input: InputStream = BufferedInputStream(url.openStream(), fileName.toInt())
+                        val imageFile = File(storageDir, fileName)
+                        val output: OutputStream = FileOutputStream(imageFile)
+                        val data = ByteArray(1024)
+                        var count: Int
+                        var total: Long = 0
+
+                        runOnUiThread {
+                            try {
+                                while (input.read(data).also { count = it } != -1) {
+                                    total += count.toLong()
+                                    val loadNum: Int = (total * 100 / lengthFile).toInt()
+                                    setProgressDialogValue(loadNum)
+                                    output.write(data, 0, count)
+                                }
+                            } catch (e: Exception) {
+                                Log.d("CCC", "exception: $e")
                             }
                             output.flush()
                             output.close()
                             input.close()
                         }
-                        dialog.dismiss()
-
+                        handler.sendEmptyMessage(0)
                     }
                 }
             } catch (e: Exception) {
