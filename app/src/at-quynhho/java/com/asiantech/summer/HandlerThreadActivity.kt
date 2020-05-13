@@ -25,6 +25,7 @@ class HandlerThreadActivity : AppCompatActivity() {
         private var FILE_URL =
             "https://kynguyenlamdep.com/wp-content/uploads/2020/01/hinh-anh-dep-hoa-bo-cong-anh.jpg"
         private var PROGRESS_BAR = 0
+        private var MAX_BAR = 100
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +55,7 @@ class HandlerThreadActivity : AppCompatActivity() {
                 dialog.setTitle("Handler")
                 dialog.setMessage("Downloading file. Please wait...")
                 dialog.isIndeterminate = false
-                dialog.max = 100
+                dialog.max = MAX_BAR
                 dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
                 dialog.setCancelable(true)
                 dialog.show()
@@ -73,26 +74,24 @@ class HandlerThreadActivity : AppCompatActivity() {
                 while (dialog.progress <= dialog.max) {
                     dialog.incrementProgressBy(1)
                     if (dialog.progress == dialog.max) {
-
                         val url = URL(FILE_URL)
                         val connection: URLConnection = url.openConnection()
                         connection.doInput = true
                         connection.connect()
                         val lengthFile: Int = connection.contentLength
-
                         val fileName = "/downloadimgthreadfile.jpg"
                         val storageDir: File =
                             Environment.getExternalStorageDirectory()
-                    //    if(!storageDir.exists()){
+                        if (!storageDir.exists()) {
                             storageDir.mkdirs()
-
-                        val input: InputStream = BufferedInputStream(url.openStream(), fileName.toInt())
+                        }
+                        val input: InputStream =
+                            BufferedInputStream(url.openStream(), fileName.toInt())
                         val imageFile = File(storageDir, fileName)
                         val output: OutputStream = FileOutputStream(imageFile)
                         val data = ByteArray(1024)
                         var count: Int
                         var total: Long = 0
-
                         runOnUiThread {
                             try {
                                 while (input.read(data).also { count = it } != -1) {
@@ -108,7 +107,7 @@ class HandlerThreadActivity : AppCompatActivity() {
                             output.close()
                             input.close()
                         }
-                        handler.sendEmptyMessage(0)
+                        handler.sendEmptyMessage(PROGRESS_BAR)
                     }
                 }
             } catch (e: Exception) {

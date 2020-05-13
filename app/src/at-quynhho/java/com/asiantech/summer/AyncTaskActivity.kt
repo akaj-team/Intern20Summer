@@ -25,6 +25,7 @@ class AyncTaskActivity : AppCompatActivity() {
         private var FILD_URL =
             "https://kynguyenlamdep.com/wp-content/uploads/2020/01/hinh-anh-dep-hoa-bo-cong-anh.jpg"
         private var PROGRESS_BAR = 0
+        private var MAX_BAR = 100
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +44,7 @@ class AyncTaskActivity : AppCompatActivity() {
                 dialog = ProgressDialog(this)
                 dialog.setMessage("Downloading file. Please wait...")
                 dialog.isIndeterminate = false
-                dialog.max = 100
+                dialog.max = MAX_BAR
                 dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
                 dialog.setCancelable(true)
                 dialog.show()
@@ -62,7 +63,6 @@ class AyncTaskActivity : AppCompatActivity() {
         }
 
         override fun doInBackground(vararg fileUrl: String): String {
-
             var count: Int
             try {
                 val url = URL(fileUrl[0])
@@ -86,7 +86,7 @@ class AyncTaskActivity : AppCompatActivity() {
                 output.flush()
                 output.close()
                 input.close()
-            } catch (e: java.lang.Exception) {
+            } catch (e: Exception) {
                 Log.e("Error: ", e.message)
             }
             return null.toString()
@@ -104,6 +104,4 @@ class AyncTaskActivity : AppCompatActivity() {
         }
     }
 }
-
-
 
