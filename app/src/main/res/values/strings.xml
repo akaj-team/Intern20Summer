@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Intern20Summer</string>
-    <string name="next">NEXT</string>
-    <string name="step_1">Step 1</string>
-    <string name="step_2">Step 2</string>
-    <string name="step_3">Step 3</string>
+    <string name="blue_neighbourhood">Blue Neighbourhood</string>
+    <string name="album_by_troye_sivan">Album by Troye Sivan</string>
 </resources>
