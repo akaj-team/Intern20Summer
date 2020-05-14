@@ -23,7 +23,7 @@
         android:textSize="17sp" />
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvNameSing"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginStart="210dp"
@@ -32,6 +32,7 @@
         android:textSize="17sp" />
 
     <TextView
+        android:id="@+id/tvTime"
         android:layout_width="50dp"
         android:layout_height="40dp"
         android:layout_marginStart="330dp"

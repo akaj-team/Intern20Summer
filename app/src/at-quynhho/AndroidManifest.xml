@@ -12,7 +12,11 @@
         <service
             android:name=".service.MediaMusicService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+        <provider
+            android:name="com.asiantech.summer.MusicContentProvider"
+            android:authorities="com.asiantech.summer.MusicContentProvider"
+            android:multiprocess="true" />
 
         <activity android:name=".MainActivity" />
         <activity android:name=".PlayerMusicActivity">
