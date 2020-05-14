@@ -86,7 +86,7 @@ class AyncTaskActivity : AppCompatActivity() {
                 output.flush()
                 output.close()
                 input.close()
-            } catch (e: Exception) {
+            } catch (e: IOException) {
                 Log.e("Error: ", e.message)
             }
             return null.toString()

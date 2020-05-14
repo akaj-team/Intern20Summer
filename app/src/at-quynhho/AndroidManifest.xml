@@ -16,9 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="m">
-        <activity android:name=".HandlerThreadActivity" />
+        <activity android:name=".AyncTaskActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".AyncTaskActivity">
+        <activity android:name=".HandlerThreadActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
