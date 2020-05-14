@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginTop="3dp"
+    android:layout_height="60dp">
+
+    <ImageView
+        android:id="@+id/imgPlayMusic"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_circledplay" />
+
+    <TextView
+        android:id="@+id/tvNameMusic"
+        android:layout_width="100dp"
+        android:textColor="@color/colorBlack"
+        android:layout_height="40dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/blue_neighbourhood"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="210dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/blue_neighbourhood"
+        android:textSize="17sp" />
+
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="330dp"
+        android:layout_marginTop="10dp"
+        android:paddingTop="10dp"
+        android:text="12:30"
+        android:textSize="17sp" />
+</androidx.cardview.widget.CardView>
