@@ -17,12 +17,9 @@ import com.asiantech.summer.Music.ACTION_PREVIOUS
 import com.asiantech.summer.Music.ACTION_SKIP_NEXT
 import com.asiantech.summer.service.MediaMusicService
 
-class CreateNotification(mediaMusicService: MediaMusicService) {
-
-    private var notificationBuilder: NotificationCompat.Builder? = null
-    private var context: Context = mediaMusicService.baseContext
+class CreateNotification(private val context: Context) {
     private var session: MediaSessionCompat? = null
-    private var manager: NotificationManager = mediaMusicService
+    private var manager: NotificationManager = context
         .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     companion object {
@@ -30,8 +27,8 @@ class CreateNotification(mediaMusicService: MediaMusicService) {
         const val CHANNEL_ID = "channelid"
     }
 
-    fun createNotificationMusic(music: DataMedia, isPlaying: Boolean): Notification? {
-        notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
+    fun createNotificationMusic(music: DataMedia, isPlaying: Boolean): Notification {
+        val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
         createNotificationChannel()
         val intentActivity = Intent(context, PlayerMusicActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(
@@ -39,7 +36,7 @@ class CreateNotification(mediaMusicService: MediaMusicService) {
             0, intentActivity, PendingIntent.FLAG_UPDATE_CURRENT
         )
         //create
-        notificationBuilder?.apply {
+        notificationBuilder.apply {
             setStyle(
                 androidx.media.app.NotificationCompat.MediaStyle()
                     .setMediaSession(session?.sessionToken)
@@ -58,7 +55,7 @@ class CreateNotification(mediaMusicService: MediaMusicService) {
             addAction(notificationAction(ACTION_SKIP_NEXT, isPlaying))
             addAction(notificationAction(ACTION_KILL_MEDIA, isPlaying))
         }
-        return notificationBuilder?.build()
+        return notificationBuilder.build()
 
     }
 

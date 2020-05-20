@@ -1,6 +1,5 @@
 package com.asiantech.summer
 
-import android.annotation.SuppressLint
 import android.content.ContentUris
 import android.content.Context
 import android.database.Cursor
@@ -59,7 +58,8 @@ object Music {
                 musicCursor.getInt(musicCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
             val albumId: Long =
                 musicCursor.getLong(musicCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))
-            val pictureUri: Uri = Uri.parse(musicCursor.getString(musicCursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)).toString())
+            val pictureUri: Uri = Uri.parse("content://media/external/audio/albumart")
+            // musicCursor.getString(musicCursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)).toString()
             val data =
                 Uri.parse(musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.DATA)))
             val albumArtUri: String = ContentUris.withAppendedId(pictureUri, albumId).toString()

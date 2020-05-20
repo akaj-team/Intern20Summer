@@ -15,7 +15,7 @@ class RecyclerViewAdapter(private var listMusic: ArrayList<DataMedia>) :
 
     companion object {
         const val MUSIC_LIST = "musiclist"
-        const val MUSIC_POSITION = "musicpostion"
+        const val MUSIC_POSITION = "music_postion"
     }
 
     override fun onCreateViewHolder(

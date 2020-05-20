@@ -1,5 +1,6 @@
 package com.asiantech.summer.fragment
 
+import android.Manifest
 import android.content.*
 import android.content.Context.BIND_AUTO_CREATE
 import android.content.pm.PackageManager
@@ -12,22 +13,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asiantech.summer.*
 import com.asiantech.summer.service.MediaMusicService
+import com.asiantech.summer.service.MediaMusicService.LocalBinder
 import kotlinx.android.synthetic.`at-quynhho`.fragment_list_media.*
 
 class ListMediaFragment : Fragment() {
 
     private var mediaMusicService = MediaMusicService()
     private var createNotification: CreateNotification? = null
-    private val listMusic: ArrayList<DataMedia> = ArrayList()
-    private val listPath: ArrayList<String> = ArrayList()
-    private var recyclerViewAdapter = RecyclerViewAdapter(listMusic)
+    private val listDataMedia: ArrayList<DataMedia> = ArrayList()
+    private var recyclerViewAdapter = RecyclerViewAdapter(listDataMedia)
     var binded: Boolean = false
     var isPlaying = false
     var position: Int = 0
+
+    private var binder: LocalBinder? = null
 
     companion object {
         const val PERMISSION = 1001
@@ -44,7 +49,7 @@ class ListMediaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initListMusic()
         listenMusic()
-        initcheckPemission()
+//        initcheckPemission()
     }
 
     override fun onRequestPermissionsResult(
@@ -61,27 +66,18 @@ class ListMediaFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-//        activity?.startService(Intent(context, MediaMusicService::class.java))
-//            .apply {
-//            initListMusic()
-//        }
         val mediaIntent = Intent(requireContext(), MediaMusicService::class.java)
-       mediaIntent.apply {
-            mediaIntent.putStringArrayListExtra(RecyclerViewAdapter.MUSIC_LIST, listPath)
-            mediaIntent.putParcelableArrayListExtra(RecyclerViewAdapter.MUSIC_LIST, listMusic)
-            mediaIntent.putExtra(RecyclerViewAdapter.MUSIC_POSITION, position)
-           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-               requireContext().startForegroundService(mediaIntent)
-               activity?.bindService( Intent(requireContext(), MediaMusicService::class.java), connection, Context.BIND_AUTO_CREATE )
-           }
+        mediaIntent.apply {
+            mediaIntent.putExtra("MEDIA_PATH", listDataMedia[0].path)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                requireContext().startForegroundService(mediaIntent)
+                activity?.bindService(mediaIntent, connection, BIND_AUTO_CREATE)
+            }
         }
-
-//        initListMusic()
     }
 
     override fun onStop() {
         super.onStop()
- //       activity?.bindService( Intent(requireContext(), MediaMusicService::class.java), connection, BIND_AUTO_CREATE)
         if (binded) {
             activity?.unbindService(connection)
             binded = false
@@ -89,30 +85,30 @@ class ListMediaFragment : Fragment() {
     }
 
     private fun initData() {
-        listMusic.clear()
-        listMusic.apply {
+        listDataMedia.clear()
+        listDataMedia.apply {
             addAll(Music.insertData(requireContext()))
         }
     }
 
     private fun initcheckPemission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            if (ContextCompat.checkSelfPermission(
-//                    requireContext(),
-//                    Manifest.permission.READ_EXTERNAL_STORAGE
-//                ) != PackageManager.PERMISSION_GRANTED
-//            ) {
-//                ActivityCompat.requestPermissions(
-//                    requireActivity(),
-//                    arrayOf(
-//                        Manifest.permission.READ_EXTERNAL_STORAGE,
-//                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-//                    ),
-//                    PERMISSION
-//                )
-//            } else {
-            initData()
-//            }
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ),
+                    PERMISSION
+                )
+            } else {
+                initData()
+            }
         }
     }
 
@@ -125,7 +121,7 @@ class ListMediaFragment : Fragment() {
                 position = it
                 Toast.makeText(
                     requireContext(),
-                    "Playing " + listMusic[it].musicName,
+                    "Playing " + listDataMedia[it].musicName,
                     Toast.LENGTH_SHORT
                 ).show()
                 isPlaying = true
@@ -135,11 +131,11 @@ class ListMediaFragment : Fragment() {
     }
 
     private fun itemBottomPlayer() {
-        if (listMusic.isNotEmpty()) {
-            imgMusicArt.setImageURI(Uri.parse(listMusic[position].imageMusic))
-            Log.d("AAA", "uri: $listMusic")
-            tvNameMusic.text = listMusic[position].musicName
-            tvNameSinger.text = listMusic[position].musicArtist
+        if (listDataMedia.isNotEmpty()) {
+            imgMusicArt.setImageURI(Uri.parse(listDataMedia[position].imageMusic))
+            Log.d("AAA", "uri: $listDataMedia")
+            tvNameMusic.text = listDataMedia[position].musicName
+            tvNameSinger.text = listDataMedia[position].musicArtist
         }
         pauseMusic()
     }
@@ -173,7 +169,7 @@ class ListMediaFragment : Fragment() {
             (activity as PlayerMusicActivity)
                 .replaceFragment(
                     ItemMusicFragment
-                        .newInstance(listMusic, isPlaying)
+                        .newInstance(listDataMedia, isPlaying)
                     , true
                 )
         }
@@ -191,6 +187,7 @@ class ListMediaFragment : Fragment() {
         mediaMusicService.initNextMusic()
         position = mediaMusicService.initPosition()
         createNotificationMedia(position)
+        binder?.playNextMedia(Uri.parse(listDataMedia[position].path))
         itemBottomPlayer()
     }
 
@@ -208,7 +205,9 @@ class ListMediaFragment : Fragment() {
         }
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            val bind = service as MediaMusicService.LocalBinder
+            val bind = service as LocalBinder
+            binder = bind
+            binder?.playNextMedia(Uri.parse(listDataMedia[0].path))
             mediaMusicService = bind.getService()
             this@ListMediaFragment.binded = true
             position = mediaMusicService.initPosition()
@@ -221,7 +220,7 @@ class ListMediaFragment : Fragment() {
     private fun createNotificationMedia(mPositon: Int) {
         createNotification = CreateNotification(mediaMusicService)
         val notification =
-            createNotification?.createNotificationMusic(listMusic[mPositon], isPlaying)
+            createNotification?.createNotificationMusic(listDataMedia[mPositon], isPlaying)
         mediaMusicService.startForeground(1, notification)
         isPlaying = mediaMusicService.isPlaying() ?: true
     }

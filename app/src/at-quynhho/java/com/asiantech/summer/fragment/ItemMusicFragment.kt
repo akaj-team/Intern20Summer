@@ -1,10 +1,7 @@
 package com.asiantech.summer.fragment
 
-import android.content.ComponentName
-import android.content.Context
+import android.content.*
 import android.content.Context.BIND_AUTO_CREATE
-import android.content.Intent
-import android.content.ServiceConnection
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -19,13 +16,13 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.core.app.ServiceCompat.stopForeground
 import com.asiantech.summer.*
 import com.asiantech.summer.service.MediaMusicService
 import com.asiantech.summer.service.MediaMusicService.Companion.isRepeat
 import com.asiantech.summer.service.MediaMusicService.Companion.isShare
 import kotlinx.android.synthetic.`at-quynhho`.fragment_item_music.*
 
-@Suppress("CAST_NEVER_SUCCEEDS")
 class ItemMusicFragment : Fragment() {
 
     private var dataMedia = arrayListOf<DataMedia>()
@@ -76,14 +73,10 @@ class ItemMusicFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-//        activity?.startService(Intent(context, MediaMusicService::class.java))
-//            .apply {
-//            this.putExtra(RecyclerViewAdapter.MUSIC_POSITION, 0)
-//            this.getStringArrayListExtra(RecyclerViewAdapter.MUSIC_LIST)
-//            this.putParcelableArrayListExtra(RecyclerViewAdapter.MUSIC_LIST, dataMedia)
-//        })
-        requireActivity().bindService( Intent(requireContext(), MediaMusicService::class.java), connection, Context.BIND_AUTO_CREATE )
-        updateMusic()
+        val mediaIntent = Intent(context, MediaMusicService::class.java)
+
+        requireActivity().bindService(mediaIntent, connection, BIND_AUTO_CREATE)
+//        updateMusic()
     }
 
     override fun onStop() {
@@ -114,7 +107,7 @@ class ItemMusicFragment : Fragment() {
     }
 
     private fun initPlayPauseButton() {
-        mediaMusicService.initPlayPause();
+        mediaMusicService.initPlayPause()
         if (isPlaying) {
             imgPlayButton.setImageResource(R.drawable.ic_pause_30)
         } else {
@@ -199,8 +192,7 @@ class ItemMusicFragment : Fragment() {
             override fun run() {
                 sbMusicTime?.max = dataMedia[position].timePlay
                 position = mediaMusicService.initPosition()
-                val currentPosition: Int = mediaMusicService.currentPosition()?:0
-         //           (mediaMusicService.currentPosition()!! / DELAY_TIME).toInt()
+                val currentPosition: Int = mediaMusicService.currentPosition() ?: 0
                 sbMusicTime?.progress = currentPosition
                 tvTimeStart?.text = Music.convertTimeMusic(sbMusicTime.progress)
                 tvTimeEnd?.text = Music.convertTimeMusic(dataMedia[position].timePlay)
@@ -215,7 +207,7 @@ class ItemMusicFragment : Fragment() {
                 initView()
 //                }
                 mHandler.postDelayed(this, DELAY_TIME)
-                Log.e("zzz",mediaMusicService.currentPosition().toString());
+                Log.e("zzz", mediaMusicService.currentPosition().toString())
             }
         }
         mHandler.post(runnable)
@@ -252,9 +244,12 @@ class ItemMusicFragment : Fragment() {
     private fun createNotification(position: Int) {
         notification = CreateNotification(mediaMusicService)
         val notification = notification?.createNotificationMusic(dataMedia[position], isPlaying)
-        mediaMusicService.startForeground(1, notification)
+        mediaMusicService.startForeground(position, notification)
         isPlaying = mediaMusicService.isPlaying() ?: true
         isRepeat = mediaMusicService.isRepeat()
         isShare = mediaMusicService.isShare()
     }
+
+
+
 }
