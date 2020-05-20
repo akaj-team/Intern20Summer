@@ -1,11 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    android:id="@+id/cardView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_marginTop="3dp"
+    android:backgroundTint="@color/colorBGPink"
+    android:layout_marginTop="5dp"
     android:layout_height="60dp">
 
     <ImageView
-        android:id="@+id/imgPlayMusic"
+        android:id="@+id/imgPlayMusicCard"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginLeft="30dp"
@@ -13,17 +15,17 @@
         android:src="@drawable/ic_circledplay" />
 
     <TextView
-        android:id="@+id/tvNameMusic"
+        android:id="@+id/tvNameMusicCard"
         android:layout_width="100dp"
         android:textColor="@color/colorBlack"
         android:layout_height="40dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginStart="90dp"
         android:layout_marginTop="10dp"
         android:text="@string/blue_neighbourhood"
         android:textSize="17sp" />
 
     <TextView
-        android:id="@+id/tvNameSing"
+        android:id="@+id/tvNameSingCard"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginStart="210dp"
@@ -32,7 +34,7 @@
         android:textSize="17sp" />
 
     <TextView
-        android:id="@+id/tvTime"
+        android:id="@+id/tvTimeCard"
         android:layout_width="50dp"
         android:layout_height="40dp"
         android:layout_marginStart="330dp"
