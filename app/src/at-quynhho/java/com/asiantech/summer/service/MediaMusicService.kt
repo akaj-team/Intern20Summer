@@ -32,11 +32,11 @@ class MediaMusicService : Service(), MediaPlayer.OnCompletionListener {
     }
 
     override fun onBind(intent: Intent): IBinder? {
-        intent.getStringExtra("MEDIA_PATH")
+        val path =intent.getStringExtra("MEDIA_PATH")
 //        binder.playNextMedia(Uri.parse("MEDIA_PATH"))
         startForeground(0, createNotification(position))
-        playMedia(Uri.parse("MEDIA_PATH"))
-        addAction()
+        playMedia(Uri.parse(path))
+ //       addAction()
         return binder
     }
 
@@ -63,7 +63,7 @@ class MediaMusicService : Service(), MediaPlayer.OnCompletionListener {
 
     fun initNextMusic() {
         position++
-        playMedia(Uri.parse("MEDIA_PATH"))
+ //       playMedia(Uri.parse())
     }
 
     fun initPreviousMusic() {
@@ -71,7 +71,7 @@ class MediaMusicService : Service(), MediaPlayer.OnCompletionListener {
 //        if (position < 0) {
 //            position
 //        }
-        playMedia(Uri.parse("MEDIA_PATH"))
+//        playMedia(Uri.parse("MEDIA_PATH"))
     }
 
     fun initPlayPause() {
@@ -117,7 +117,7 @@ class MediaMusicService : Service(), MediaPlayer.OnCompletionListener {
         val notification =
             binder.let { createNotification.createNotificationMusic(media!!, isPlaying) }
         startForeground(position, notification)
-        playMedia(Uri.parse("MEDIA_PATH"))
+//        playMedia(Uri.parse("MEDIA_PATH"))
         isPlaying = this.isPlaying() ?: true
         return notification
     }

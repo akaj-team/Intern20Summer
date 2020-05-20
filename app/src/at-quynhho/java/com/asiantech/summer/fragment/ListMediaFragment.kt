@@ -68,6 +68,7 @@ class ListMediaFragment : Fragment() {
         super.onStart()
         val mediaIntent = Intent(requireContext(), MediaMusicService::class.java)
         mediaIntent.apply {
+            Log.d("FFF", "list media: ${listDataMedia[0].path}")
             mediaIntent.putExtra("MEDIA_PATH", listDataMedia[0].path)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 requireContext().startForegroundService(mediaIntent)
