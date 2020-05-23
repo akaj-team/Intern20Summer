@@ -163,21 +163,27 @@ class ListMediaFragment : Fragment() {
     fun pauseMusic() {
         imgPlayPause.setImageResource(R.drawable.ic_play_arrow_black_30)
         binder?.getService()?.onPauseMusic()
+        createNotificationMedia(position)
     }
 
     fun nextMusic() {
         position++
         binder?.playNextMedia(Uri.parse(listDataMedia[position].path))
         itemBottomPlayer()
+        binder?.playNextMedia(Uri.parse(listDataMedia[position].path))
         binder?.getService()?.onNextMusic()
+        createNotificationMedia(position)
     }
 
     fun previousMusic() {
         if (position > 0) {
-            createNotificationMedia(position)
             binder?.playNextMedia(Uri.parse(listDataMedia[position].path))
             itemBottomPlayer()
             binder?.getService()?.onPreviousMusic()
+            createNotificationMedia(position)
+        }
+        else{
+            position = 0
         }
     }
 

@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.SeekBar
 import android.widget.Toast
 import com.asiantech.summer.*
 import com.asiantech.summer.service.MediaMusicService
@@ -141,6 +140,7 @@ class ItemMusicFragment : Fragment() {
     private fun nextMusic() {
         isPlaying = true
         ListMediaFragment.newInstance(isPlaying).nextMusic()
+        createNotification(position)
     }
 
     private fun playMediaService() {
@@ -151,6 +151,7 @@ class ItemMusicFragment : Fragment() {
     private fun previousMusic() {
         isPlaying = true
         ListMediaFragment.newInstance(isPlaying).previousMusic()
+        createNotification(position)
     }
 
     private fun initPlayPauseMedia() {
@@ -163,6 +164,7 @@ class ItemMusicFragment : Fragment() {
             isPlaying = true
         }
         binder?.playNextMedia(Uri.parse(dataMedia[position].path))
+        createNotification(position)
     }
 
     private fun initShare() {
@@ -175,6 +177,7 @@ class ItemMusicFragment : Fragment() {
             isShare = false
             Toast.makeText(requireContext(), getString(0), Toast.LENGTH_SHORT).show()
         }
+        createNotification(position)
     }
 
     private fun initRepeat() {
@@ -187,6 +190,7 @@ class ItemMusicFragment : Fragment() {
             isRepeat = false
             Toast.makeText(requireContext(), getString(0), Toast.LENGTH_SHORT).show()
         }
+        createNotification(position)
     }
 
     private fun initObserverMediaPlaying() {
@@ -195,7 +199,6 @@ class ItemMusicFragment : Fragment() {
                 activity?.runOnUiThread {
                     updateProgress()
                 }
-//                initRotatyAlumArt()// Tach moi function lam mot nhiem vu rieng
                 Log.e("xxx", (binder?.getService()?.mediaPlayer?.currentPosition ?: 0).toString())
                 mHandler.postDelayed(this, DELAY_TIME)
 
@@ -212,7 +215,7 @@ class ItemMusicFragment : Fragment() {
 
     private fun createNotification(position: Int) {
         notification = CreateNotification(requireContext())
-        val notification = notification?.createNotificationMusic(dataMedia[position], isPlaying)
+        notification?.createNotificationMusic(dataMedia[position], isPlaying)
     }
 
     private fun updateProgress() {

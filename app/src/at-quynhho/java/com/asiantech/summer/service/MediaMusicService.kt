@@ -2,14 +2,11 @@ package com.asiantech.summer.service
 
 import android.app.Notification
 import android.app.Service
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Binder
 import android.os.IBinder
-import com.asiantech.summer.Music
 import com.asiantech.summer.fragment.ListMediaFragment
 
 class MediaMusicService : Service(), MediaPlayer.OnCompletionListener {
@@ -27,13 +24,11 @@ class MediaMusicService : Service(), MediaPlayer.OnCompletionListener {
 
     override fun onBind(intent: Intent): IBinder? {
         intent.getStringExtra("MEDIA_PATH")
-//        binder.getService().clickPlayMusic(intent)
         return binder
     }
 
     override fun onCreate() {
         super.onCreate()
-
         startForeground(position, notification)
     }
 
@@ -107,14 +102,4 @@ class MediaMusicService : Service(), MediaPlayer.OnCompletionListener {
         }
     }
 
-//
-//    private fun addAction() {
-//        val filter = IntentFilter()
-//        filter.apply {
-//            addAction(Music.ACTION_PAUSE)
-//            addAction(Music.ACTION_SKIP_NEXT)
-//            addAction(Music.ACTION_PREVIOUS)
-//            addAction(Music.ACTION_KILL_MEDIA)
-//        }
-//    }
 }
