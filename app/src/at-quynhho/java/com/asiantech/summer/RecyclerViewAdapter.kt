@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.`at-quynhho`.item_media.view.*
 
 class RecyclerViewAdapter(private var listMusic: ArrayList<DataMedia>) :
     RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder?>() {
+//    var test :() ->Unit ={}
 
     internal var onPlayClick: (position: Int) -> Unit = {}
 

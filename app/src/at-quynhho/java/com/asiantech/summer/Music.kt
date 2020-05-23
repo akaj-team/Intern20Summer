@@ -63,15 +63,17 @@ object Music {
             val data =
                 Uri.parse(musicCursor.getString(musicCursor.getColumnIndex(MediaStore.Audio.Media.DATA)))
             val albumArtUri: String = ContentUris.withAppendedId(pictureUri, albumId).toString()
-            dataMedia.add(
-                DataMedia(
-                    data.toString(),
-                    musicName,
-                    musicArtist,
-                    albumArtUri,
-                    musicTime
+            if (musicArtist!=null){
+                dataMedia.add(
+                    DataMedia(
+                        data.toString(),
+                        musicName,
+                        musicArtist,
+                        albumArtUri,
+                        musicTime
+                    )
                 )
-            )
+            }
         }
         musicCursor?.close()
         return dataMedia

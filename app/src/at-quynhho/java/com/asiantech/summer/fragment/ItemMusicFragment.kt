@@ -4,10 +4,7 @@ import android.content.*
 import android.content.Context.BIND_AUTO_CREATE
 import android.graphics.Color
 import android.net.Uri
-import android.os.Bundle
-import android.os.Handler
-import android.os.IBinder
-import android.os.Looper
+import android.os.*
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,7 +13,6 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.SeekBar
 import android.widget.Toast
-import androidx.core.app.ServiceCompat.stopForeground
 import com.asiantech.summer.*
 import com.asiantech.summer.service.MediaMusicService
 import com.asiantech.summer.service.MediaMusicService.Companion.isRepeat
@@ -25,22 +21,42 @@ import kotlinx.android.synthetic.`at-quynhho`.fragment_item_music.*
 
 class ItemMusicFragment : Fragment() {
 
-    private var dataMedia = arrayListOf<DataMedia>()
+    private var dataMedia: ArrayList<DataMedia> = ArrayList()
     private var position = 0
     private var notification: CreateNotification? = null
-    private var binded: Boolean = false
+    private var isBinded: Boolean = false
     private var isPlaying = false
-    private var mediaMusicService = MediaMusicService()
-    private var mHandler: Handler = Handler(Looper.getMainLooper())
+    private var mHandler: Handler = Handler(HandlerThread("Name").apply {
+        start()
+    }.looper)
+    private var binder: MediaMusicService.LocalBinder? = null
+    private var connection: ServiceConnection = object : ServiceConnection {
+        override fun onServiceDisconnected(name: ComponentName) {
+            Log.e("xxx", "onServiceDisconnected")
+            isBinded = false
+        }
+
+        override fun onServiceConnected(name: ComponentName, service: IBinder) {
+            Log.e("xxx", "onServiceConnected")
+            binder = (service as MediaMusicService.LocalBinder)
+            isBinded = true
+        }
+    }
 
     companion object {
         const val DELAY_TIME: Long = 1000
         const val LIST_MUSIC_KEY = "listmusic"
+        const val POSITION = "position"
         const val IS_PLAYING_KEY = "isplaying"
-        fun newInstance(listMusic: ArrayList<DataMedia>, isPlayer: Boolean): ItemMusicFragment {
+        fun newInstance(
+            dataMedia: ArrayList<DataMedia>,
+            position: Int,
+            isPlayer: Boolean
+        ): ItemMusicFragment {
             return ItemMusicFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelableArrayList(LIST_MUSIC_KEY, listMusic)
+                    putParcelable(LIST_MUSIC_KEY, getParcelable(dataMedia.toString()))
+                    putInt(POSITION, position)
                     putBoolean(IS_PLAYING_KEY, isPlayer)
                 }
             }
@@ -51,39 +67,28 @@ class ItemMusicFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_item_music, container, false)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         arguments.let {
-            dataMedia =
-                it?.getParcelableArrayList<DataMedia>(LIST_MUSIC_KEY) as ArrayList<DataMedia>
-            isPlaying = it.getBoolean(IS_PLAYING_KEY)
-
+                dataMedia =
+                    it?.getParcelableArrayList<DataMedia>(LIST_MUSIC_KEY) as ArrayList
+                position = it.getInt(POSITION, 0)
+                isPlaying = it.getBoolean(IS_PLAYING_KEY)
         }
+        return inflater.inflate(R.layout.fragment_item_music, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initListener()
-        updateMusic()
+        initView()
+        initListener()// Chi goi handle.post khi nhac duoc start
         initPlayPauseButton()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val mediaIntent = Intent(context, MediaMusicService::class.java)
-
-        requireActivity().bindService(mediaIntent, connection, BIND_AUTO_CREATE)
-//        updateMusic()
+        initObserverMediaPlaying()
     }
 
     override fun onStop() {
         super.onStop()
-        if (binded) {
+        if (isBinded) {
             activity?.unbindService(connection)
-            binded = false
+            isBinded = false
         }
     }
 
@@ -91,7 +96,7 @@ class ItemMusicFragment : Fragment() {
         civDiskAlbum.setImageURI(Uri.parse(dataMedia[position].imageMusic))
         tvMusicNamePlaying.text = dataMedia[position].musicName
         tvMusicArtistPlaying.text = dataMedia[position].musicArtist
-
+        Log.d("aaaa", "" + dataMedia.size)
         if (isRepeat) {
             imgRepeat.setColorFilter(R.color.colorLightGrey)
         } else {
@@ -107,7 +112,7 @@ class ItemMusicFragment : Fragment() {
     }
 
     private fun initPlayPauseButton() {
-        mediaMusicService.initPlayPause()
+        playMediaService()
         if (isPlaying) {
             imgPlayButton.setImageResource(R.drawable.ic_pause_30)
         } else {
@@ -135,20 +140,17 @@ class ItemMusicFragment : Fragment() {
 
     private fun nextMusic() {
         isPlaying = true
-        position++
-        if (position > dataMedia.size - 1) position = 0
-        mediaMusicService.initNextMusic()
-        createNotification(position)
-        initView()
+        ListMediaFragment.newInstance(isPlaying).nextMusic()
+    }
+
+    private fun playMediaService() {
+        val mediaIntent = Intent(context, MediaMusicService::class.java)
+        requireActivity().bindService(mediaIntent, connection, BIND_AUTO_CREATE)
     }
 
     private fun previousMusic() {
         isPlaying = true
-        position--
-        if (position < 0) position = dataMedia.size - 1
-        mediaMusicService.initPreviousMusic()
-        createNotification(position)
-        initView()
+        ListMediaFragment.newInstance(isPlaying).previousMusic()
     }
 
     private fun initPlayPauseMedia() {
@@ -159,7 +161,7 @@ class ItemMusicFragment : Fragment() {
             imgPlayButton.setImageResource(R.drawable.ic_pause_30)
             true
         }
-        mediaMusicService.initPlayPause()
+        binder?.playNextMedia(Uri.parse(dataMedia[position].path))
     }
 
     private fun initShare() {
@@ -186,70 +188,59 @@ class ItemMusicFragment : Fragment() {
         }
     }
 
-    private fun updateMusic() {
-//        var mPosition : Int = position
+    private fun initObserverMediaPlaying() {
         val runnable = object : Runnable {
             override fun run() {
-                sbMusicTime?.max = dataMedia[position].timePlay
-                position = mediaMusicService.initPosition()
-                val currentPosition: Int = mediaMusicService.currentPosition() ?: 0
-                sbMusicTime?.progress = currentPosition
-                tvTimeStart?.text = Music.convertTimeMusic(sbMusicTime.progress)
-                tvTimeEnd?.text = Music.convertTimeMusic(dataMedia[position].timePlay)
-                //                if (position > 0) {
-//                    try {
-//                        position
-//                        initView()
-//                        Log.d("DDD", "position:$position")
-//                    } catch (exception: NullPointerException) {
-//                        Log.d("CCC", "position:$position")
-//                    }
-                initView()
-//                }
+                activity?.runOnUiThread {
+                    updateProgress()
+                }
+//                initRotatyAlumArt()// Tach moi function lam mot nhiem vu rieng
+                Log.e("xxx", (binder?.getService()?.mediaPlayer?.currentPosition ?: 0).toString())
                 mHandler.postDelayed(this, DELAY_TIME)
-                Log.e("zzz", mediaMusicService.currentPosition().toString())
+
             }
         }
         mHandler.post(runnable)
-        sbMusicTime.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                tvTimeStart?.text = Music.convertTimeMusic(sbMusicTime.progress)
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                mediaMusicService.seekTo(sbMusicTime.progress)
-            }
-        })
     }
 
-    private var connection: ServiceConnection = object : ServiceConnection {
-        override fun onServiceDisconnected(name: ComponentName) {
-            binded = false
-            mediaMusicService.stopSelf()
-        }
-
-        override fun onServiceConnected(name: ComponentName, service: IBinder) {
-            binded = true
-            val localBinder = service as MediaMusicService.LocalBinder
-            mediaMusicService = localBinder.getService()
-            position = mediaMusicService.initPosition()
-            isPlaying = mediaMusicService.isPlaying() ?: true
-            initView()
-        }
+    private fun initRotatyAlumArt() {
+        civDiskAlbum.setImageURI(Uri.parse(dataMedia[position].imageMusic))
+        val rotation = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate)
+        civDiskAlbum.startAnimation(rotation)
     }
 
     private fun createNotification(position: Int) {
-        notification = CreateNotification(mediaMusicService)
+        notification = CreateNotification(requireContext())
         val notification = notification?.createNotificationMusic(dataMedia[position], isPlaying)
-        mediaMusicService.startForeground(position, notification)
-        isPlaying = mediaMusicService.isPlaying() ?: true
-        isRepeat = mediaMusicService.isRepeat()
-        isShare = mediaMusicService.isShare()
     }
 
+    private fun updateProgress() {
+        sbMusicTime?.progress = binder?.getService()?.mediaPlayer?.currentPosition ?: 0
+        tvTimeStart?.text = Music.convertTimeMusic(sbMusicTime.progress)
+        sbMusicTime?.max =
+            binder?.getService()?.mediaPlayer?.duration ?: 0
+        val maxProgress = sbMusicTime?.max
+        if (maxProgress != null) {
+            tvTimeEnd?.text = Music.convertTimeMusic(maxProgress)
+        }
+        seekBar()
+        initRotatyAlumArt()
+    }
 
+    private fun seekBar() {
+        sbMusicTime.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                sbMusicTime.progress = progress
+            }
 
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+            }
+
+        })
+    }
 }

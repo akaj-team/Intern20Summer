@@ -7,12 +7,14 @@ import com.asiantech.summer.fragment.ListMediaFragment
 
 class PlayerMusicActivity : AppCompatActivity() {
 
+    private var isPlayer: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player_music)
-        replaceFragment(ListMediaFragment())
+        replaceFragment(ListMediaFragment.newInstance(isPlayer))
 
     }
+
     internal fun replaceFragment(fragment: Fragment, isAddToBackStack: Boolean = false) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.flMediaPlayer, fragment, null)
