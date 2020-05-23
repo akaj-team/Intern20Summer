@@ -21,7 +21,7 @@ class ListMediaFragment : Fragment() {
 
     private var mediaMusicService = MediaMusicService()
     private var createNotification: CreateNotification? = null
-    private val listDataMedia: ArrayList<DataMedia> = ArrayList()
+    private var listDataMedia: ArrayList<DataMedia> = ArrayList()
     private var recyclerViewAdapter = RecyclerViewAdapter(listDataMedia)
     var binded: Boolean = false
     var isPlaying = false
@@ -143,7 +143,6 @@ class ListMediaFragment : Fragment() {
 
         }
         clCardView.setOnClickListener {
-            listDataMedia[position]
             (activity as PlayerMusicActivity)
                 .replaceFragment(
                     ItemMusicFragment
@@ -161,7 +160,7 @@ class ListMediaFragment : Fragment() {
         }
     }
 
-    private fun pauseMusic() {
+    fun pauseMusic() {
         imgPlayPause.setImageResource(R.drawable.ic_play_arrow_black_30)
         binder?.getService()?.onPauseMusic()
     }

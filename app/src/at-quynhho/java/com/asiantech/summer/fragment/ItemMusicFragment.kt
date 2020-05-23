@@ -55,7 +55,7 @@ class ItemMusicFragment : Fragment() {
         ): ItemMusicFragment {
             return ItemMusicFragment().apply {
                 arguments = Bundle().apply {
-                    putParcelable(LIST_MUSIC_KEY, getParcelable(dataMedia.toString()))
+                    putParcelableArrayList(LIST_MUSIC_KEY, dataMedia)
                     putInt(POSITION, position)
                     putBoolean(IS_PLAYING_KEY, isPlayer)
                 }
@@ -68,10 +68,10 @@ class ItemMusicFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         arguments.let {
-                dataMedia =
-                    it?.getParcelableArrayList<DataMedia>(LIST_MUSIC_KEY) as ArrayList
-                position = it.getInt(POSITION, 0)
-                isPlaying = it.getBoolean(IS_PLAYING_KEY)
+            dataMedia =
+                it?.getParcelableArrayList<DataMedia>(LIST_MUSIC_KEY) as ArrayList
+            position = it.getInt(POSITION, 0)
+            isPlaying = it.getBoolean(IS_PLAYING_KEY)
         }
         return inflater.inflate(R.layout.fragment_item_music, container, false)
     }
@@ -154,12 +154,13 @@ class ItemMusicFragment : Fragment() {
     }
 
     private fun initPlayPauseMedia() {
-        isPlaying = if (isPlaying) {
+        if (isPlaying) {
             imgPlayButton.setImageResource(R.drawable.ic_play_arrow_black_30)
-            false
+            isPlaying = false
+            ListMediaFragment.newInstance(isPlaying).pauseMusic()
         } else {
             imgPlayButton.setImageResource(R.drawable.ic_pause_30)
-            true
+            isPlaying = true
         }
         binder?.playNextMedia(Uri.parse(dataMedia[position].path))
     }
@@ -223,24 +224,6 @@ class ItemMusicFragment : Fragment() {
         if (maxProgress != null) {
             tvTimeEnd?.text = Music.convertTimeMusic(maxProgress)
         }
-        seekBar()
         initRotatyAlumArt()
-    }
-
-    private fun seekBar() {
-        sbMusicTime.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                sbMusicTime.progress = progress
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-            }
-
-        })
     }
 }
