@@ -10,7 +10,7 @@ import com.asiantech.summer.R
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.`at-quynhho`.recyclerview_cart.view.*
 
-class CartAdapter(private var listFood: ArrayList<Food>) :
+class CartAdapter(private var listFood: List<Food>) :
     RecyclerView.Adapter<CartAdapter.CartRecyclerViewHolder?>() {
 
     var onDeleteClick: (position: Int) -> Unit = {}

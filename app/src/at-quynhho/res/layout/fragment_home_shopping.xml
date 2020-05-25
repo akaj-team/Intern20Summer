@@ -9,15 +9,21 @@
         android:id="@+id/toolbar"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="60dp" >
+        android:layout_height="80dp" >
         <TextView
             android:id="@+id/tvToolbar"
             android:text="Information Product"
-            android:padding="10dp"
             android:textColor="@color/colorBlack"
             android:textSize="25sp"
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/imgAddtoCart"
+            android:src="@drawable/ic_add_shopping_cart_60"
+            android:layout_marginLeft="100dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -25,7 +31,6 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="50dp" />
+        android:layout_marginTop="80dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

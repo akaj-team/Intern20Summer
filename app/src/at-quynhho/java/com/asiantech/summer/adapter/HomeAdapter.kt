@@ -1,6 +1,5 @@
 package com.asiantech.summer.adapter
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ class HomeAdapter(private var listFood: List<Food>) :
     RecyclerView.Adapter<HomeAdapter.HomeRecyclerViewHolder?>() {
 
     var onAddClick: (position: Int) -> Unit = {}
-    var onLikeClick: (position: Int) -> Unit = {}
+    var onEditClick: (position: Int) -> Unit = {}
 
     override fun onBindViewHolder(holder: HomeRecyclerViewHolder, position: Int) {
         (holder as? HomeRecyclerViewHolder)?.bind()
@@ -47,7 +46,7 @@ class HomeAdapter(private var listFood: List<Food>) :
                 onAddClick.invoke(adapterPosition)
             }
             imageLike.setOnClickListener {
-                onLikeClick.invoke(adapterPosition)
+                onEditClick.invoke(adapterPosition)
             }
         }
 

@@ -2,6 +2,7 @@ package com.asiantech.summer.adapter
 
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.os.Message
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -25,8 +26,8 @@ class HomeShoppingFragment : Fragment() {
     private lateinit var listFood: List<Food>
     private var position = 0
     private lateinit var dialog: ProgressDialog
-    private val service: DataService =
-        RetrofitClient.getRetrofitInstance()?.create(DataService::class.java)!!
+    private val service: DataService? =
+        RetrofitClient.getRetrofitInstance()?.create(DataService::class.java)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,27 +50,30 @@ class HomeShoppingFragment : Fragment() {
         }
         homeAdapter.onAddClick = {
             addFoodOnCart(listFood[position])
-            activity?.supportFragmentManager?.beginTransaction()?.add(R.id.flShopping, ShoppingCartFragment())?.commit()
         }
-        homeAdapter.onLikeClick = {
-            position = it
-            imgLikeProduct
+        homeAdapter.onEditClick = {
+            updateFood()
         }
-
+        imgAddtoCart.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.flShopping, ShoppingCartFragment.newInstance(listFood[position]))
+                ?.commit()
+        }
     }
 
     private fun getDataServer() {
         dialog = ProgressDialog(context)
+        dialog.setMessage("Loading..")
         dialog.show()
-        val call: Call<List<Food>> = service.getAllFood()
-        call.enqueue(object : Callback<List<Food>> {
+        val call: Call<List<Food>>? = service?.getAllFood()
+        call?.enqueue(object : Callback<List<Food>> {
             override fun onFailure(call: Call<List<Food>>, t: Throwable) {
                 dialog.dismiss()
             }
 
             override fun onResponse(call: Call<List<Food>>, response: Response<List<Food>>) {
                 dialog.dismiss()
-                listFood = (response.body() as? List<Food>) ?: listOf()
+                listFood = (response.body()) ?: listOf()
                 listProduct()
             }
 
@@ -77,21 +81,37 @@ class HomeShoppingFragment : Fragment() {
     }
 
     private fun addFoodOnCart(food: Food) {
-            val call: Call<Food> = service.addFood(food)
-        call.enqueue(object : Callback<Food>{
+        val call: Call<Food>? = service?.addFood(food)
+        call?.enqueue(object : Callback<Food> {
             override fun onFailure(call: Call<Food>, t: Throwable) {
 
             }
 
             override fun onResponse(call: Call<Food>, response: Response<Food>) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     Log.d("AAA", "" + response.body())
-                    food?.copy(id = food?.id, avatar = food?.avatar, name = food?.name,
-                        title = food?.title, price = food?.price, quantum = food?.quantum)
+                    food.copy(
+                        id = food.id, avatar = food.avatar, name = food.name,
+                        title = food.title, price = food.price, quantum = food.quantum
+                    )
+                }
+            }
+        })
+    }
+
+    private fun updateFood() {
+        val call: Call<Food>? = service?.getUpdateFood(0, listFood[position])
+        call?.enqueue(object : Callback<Food> {
+            override fun onFailure(call: Call<Food>, t: Throwable) {
+
+            }
+
+            override fun onResponse(call: Call<Food>, response: Response<Food>) {
+                if (response.isSuccessful) {
+
                 }
             }
 
         })
     }
-
 }
