@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.asiantech.summer.Food
+import com.asiantech.summer.MainFood
 import com.asiantech.summer.R
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.`at-quynhho`.recyclerview_home.view.*
 
-class HomeAdapter(private var listFood: List<Food>) :
+class HomeAdapter(private var listMainFood: List<MainFood>) :
     RecyclerView.Adapter<HomeAdapter.HomeRecyclerViewHolder?>() {
 
     var onAddClick: (position: Int) -> Unit = {}
@@ -29,7 +29,7 @@ class HomeAdapter(private var listFood: List<Food>) :
         )
     }
 
-    override fun getItemCount(): Int = listFood.size
+    override fun getItemCount(): Int = listMainFood.size
 
     inner class HomeRecyclerViewHolder constructor(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
@@ -51,7 +51,7 @@ class HomeAdapter(private var listFood: List<Food>) :
         }
 
         fun bind() {
-            listFood[adapterPosition].let {
+            listMainFood[adapterPosition].let {
                 nameFood.text = it.name
                 titleFood.text = it.title
                 priceFood.text = it.price.toString()
