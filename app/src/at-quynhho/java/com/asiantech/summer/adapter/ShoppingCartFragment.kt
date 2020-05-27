@@ -1,11 +1,15 @@
 package com.asiantech.summer.adapter
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asiantech.summer.MainFood
 import com.asiantech.summer.R
@@ -18,20 +22,17 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class ShoppingCartFragment : Fragment() {
     private lateinit var user: User
     private var listMainFood: ArrayList<MainFood> = arrayListOf()
-    private var total: Double = 0.0
-    private var quantum: String = ""
     private var cartAdapter: CartAdapter? = null
-    private var position = 0
     private var service: DataService? =
         RetrofitClient.getRetrofitInstance()?.create(DataService::class.java)
 
     companion object {
         private const val LIST_FOOD = "listfood"
         private const val USER = "user"
-        private const val QUANTUM = "quantum"
 
         fun newInstance(
             mainFoods: ArrayList<MainFood>,
@@ -65,38 +66,85 @@ class ShoppingCartFragment : Fragment() {
     private fun listFoodCart() {
         rvMyCart.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = CartAdapter(listMainFood)
+            cartAdapter = CartAdapter(listMainFood)
+            adapter = cartAdapter
+            totalProduct()
+            cartAdapter?.onUpdateClick = {
+                dialogGetNumber(it)
+                cartAdapter?.notifyDataSetChanged()
+                totalProduct()
+            }
             cartAdapter?.onDeleteClick = {
                 deleteFoodOnCart(it)
+//                totalProduct()
             }
-
         }
-        cartAdapter?.notifyDataSetChanged()
-        Log.d("aaa", "cart " + listMainFood.size)
-        totalProduct()
     }
 
-    private fun deleteFoodOnCart(id: Int) {
-        val call: Call<ResponseBody>? = service?.deleteFood(id)
-        call?.execute()
+    private fun deleteFoodOnCart(position: Int) {
+        val call: Call<ResponseBody>? = service?.deleteFood(1, listMainFood[position].id)
         call?.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
+                Log.d("TAG11", t.message)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-//                    listMainFood = (response.body())
-//                    response.code()
-//                    listMainFood.removeAt(mainFood.id)
+                    listMainFood.removeAt(position)
+                    cartAdapter?.notifyItemRemoved(position)
+//                    totalProduct()
                 }
             }
         })
     }
 
+    private fun updateQuantumFood(position: Int, mainFood: MainFood) {
+        val call: Call<MainFood>? = service?.getUpdateFood(1, position, mainFood)
+        call?.enqueue(object : Callback<MainFood> {
+            override fun onFailure(call: Call<MainFood>, t: Throwable) {
+
+            }
+
+            override fun onResponse(call: Call<MainFood>, response: Response<MainFood>) {
+                if (response.isSuccessful) {
+                    listMainFood.add(mainFood)
+                }
+            }
+        })
+    }
+
+    private fun dialogGetNumber(position: Int) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder.setTitle("Update quantum product")
+        val editNum = EditText(context)
+        editNum.inputType = InputType.TYPE_CLASS_NUMBER
+        builder.setView(editNum)
+        builder.setPositiveButton(
+            "OK"
+        ) { dialog, which ->
+            val mainFood = listMainFood[position]
+            mainFood.quantum = editNum.text.toString().toInt()
+            updateQuantumFood(position, mainFood)
+        }
+        builder.setNegativeButton(
+            "Cancel"
+        ) { dialog, which -> dialog?.cancel() }
+        builder.show()
+    }
+
+    @SuppressLint("SetTextI18n")
     private fun totalProduct() {
-        total += (listMainFood[position].price)
-//        total += total
-        tvTotalPrice.text = "Total: $total $"
+        var total = 0.0
+        listMainFood.forEach {
+            if (it.id == 0){
+                total = 0.0
+            }
+            else{
+                total += it.price * (it.quantum?.toDouble() ?: 0.0)
+                Log.d("TAG11", "$total")
+            }
+        }
+        tvTotalPrice.text = "Total: $total$"
     }
 }
+

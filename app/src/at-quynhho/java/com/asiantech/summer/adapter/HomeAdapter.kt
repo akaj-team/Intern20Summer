@@ -13,7 +13,7 @@ class HomeAdapter(private var listMainFood: List<MainFood>) :
     RecyclerView.Adapter<HomeAdapter.HomeRecyclerViewHolder?>() {
 
     var onAddClick: (position: Int) -> Unit = {}
-    var onEditClick: (position: Int) -> Unit = {}
+    var onLikeClick: (position: Int) -> Unit = {}
 
     override fun onBindViewHolder(holder: HomeRecyclerViewHolder, position: Int) {
         (holder as? HomeRecyclerViewHolder)?.bind()
@@ -46,7 +46,7 @@ class HomeAdapter(private var listMainFood: List<MainFood>) :
                 onAddClick.invoke(adapterPosition)
             }
             imageLike.setOnClickListener {
-                onEditClick.invoke(adapterPosition)
+                onLikeClick.invoke(adapterPosition)
             }
         }
 
@@ -64,7 +64,5 @@ class HomeAdapter(private var listMainFood: List<MainFood>) :
                 }
             }
         }
-
     }
-
 }

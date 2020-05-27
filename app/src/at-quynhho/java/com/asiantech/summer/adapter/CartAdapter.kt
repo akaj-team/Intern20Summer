@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.`at-quynhho`.recyclerview_cart.view.*
 class CartAdapter(private var listMainFood: List<MainFood>) :
     RecyclerView.Adapter<CartAdapter.CartRecyclerViewHolder?>() {
     var onDeleteClick: (position: Int) -> Unit = {}
+    var onUpdateClick: (position: Int) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartRecyclerViewHolder {
         return CartRecyclerViewHolder(
@@ -43,6 +44,9 @@ class CartAdapter(private var listMainFood: List<MainFood>) :
             imageDelete.setOnClickListener {
                 onDeleteClick.invoke(adapterPosition)
             }
+            quantum.setOnClickListener {
+                onUpdateClick.invoke(adapterPosition)
+            }
         }
 
         fun bind() {
@@ -60,7 +64,5 @@ class CartAdapter(private var listMainFood: List<MainFood>) :
                 }
             }
         }
-
     }
-
 }

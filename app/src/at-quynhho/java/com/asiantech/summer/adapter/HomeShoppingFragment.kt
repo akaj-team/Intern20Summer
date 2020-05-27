@@ -4,7 +4,6 @@ package com.asiantech.summer.adapter
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -31,13 +30,8 @@ class HomeShoppingFragment : Fragment() {
     private lateinit var listMainFood: List<MainFood>
     private var addList: ArrayList<MainFood> = arrayListOf()
     private lateinit var dialog: ProgressDialog
-    var quantumText: String = ""
     private val service: DataService? =
         RetrofitClient.getRetrofitInstance()?.create(DataService::class.java)
-
-    companion object {
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,12 +54,11 @@ class HomeShoppingFragment : Fragment() {
         }
         homeAdapter.onAddClick = {
             //todo
-            dialogGetNumber()
-            quantumText = listMainFood[it].quantum.toString()
-            addFoodOnCart(listMainFood[it])
+            dialogGetNumber(it)
+
         }
-        homeAdapter.onEditClick = {
-            updateFood(listMainFood[it])
+        homeAdapter.onLikeClick = {
+            homeAdapter.notifyDataSetChanged()
         }
         imgAddtoCart.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()
@@ -114,46 +107,29 @@ class HomeShoppingFragment : Fragment() {
                         title = mainFood.title, price = mainFood.price, quantum = mainFood.quantum
                     )
                     addList.add(mainFood)
-//                    user.idFood
                 }
             }
         })
     }
 
-    private fun updateFood(mainFood: MainFood) {
-        val call: Call<MainFood>? = service?.getUpdateFood(0, mainFood)
-        call?.enqueue(object : Callback<MainFood> {
-            override fun onFailure(call: Call<MainFood>, t: Throwable) {
-
-            }
-
-            override fun onResponse(call: Call<MainFood>, response: Response<MainFood>) {
-                if (response.isSuccessful) {
-
-                }
-            }
-        })
-    }
-
-    private fun dialogGetNumber() {
+    private fun dialogGetNumber(position:Int) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.setTitle("Import quantum product")
-        val editNum: EditText = EditText(context)
+        val editNum = EditText(context)
         editNum.inputType = InputType.TYPE_CLASS_NUMBER
         builder.setView(editNum)
-        builder.setPositiveButton("OK", object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface?, which: Int) {
-                quantumText = editNum.text.toString()
-            }
-
-        })
-        builder.setNegativeButton("Cancel", object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface?, which: Int) {
-                dialog?.cancel()
-            }
-
-        })
+        builder.setPositiveButton(
+            "OK"
+        ) { dialog, which ->
+            val mainFood = listMainFood[position]
+            mainFood.quantum = editNum.text.toString().toInt()
+            addFoodOnCart(mainFood)
+        }
+        builder.setNegativeButton(
+            "Cancel"
+        ) { dialog, which -> dialog?.cancel() }
         builder.show()
     }
 }
+
 
