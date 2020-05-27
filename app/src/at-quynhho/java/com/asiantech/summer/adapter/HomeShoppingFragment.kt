@@ -98,15 +98,13 @@ class HomeShoppingFragment : Fragment() {
             override fun onFailure(call: Call<MainFood>, t: Throwable) {
 
             }
-
             override fun onResponse(call: Call<MainFood>, response: Response<MainFood>) {
                 if (response.isSuccessful) {
                     Log.d("AAA", "" + response.body())
-                    mainFood.copy(
-                        id = mainFood.id, avatar = mainFood.avatar, name = mainFood.name,
-                        title = mainFood.title, price = mainFood.price, quantum = mainFood.quantum
-                    )
-                    addList.add(mainFood)
+                    response.body()?.also {
+                        addList.add(it)
+                    }
+
                 }
             }
         })

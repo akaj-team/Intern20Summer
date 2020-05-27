@@ -4,10 +4,10 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class MainFood(var id: Int,
-                    var avatar: String,
-                    var name: String,
-                    var title: String,
-                    var price: Double,
+data class MainFood(val id: Int,
+                    val avatar: String,
+                    val name: String,
+                    val title: String,
+                    val price: Double,
                     var quantum:Int?=0) :
     Parcelable

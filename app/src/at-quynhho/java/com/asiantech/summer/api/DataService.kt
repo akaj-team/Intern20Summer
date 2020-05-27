@@ -13,15 +13,18 @@ interface DataService {
     @GET("/foods/{id}")
     fun getIdFood(@Path("id") id: Int): Call<MainFood>
 
-    @GET("/user/2")
+    @GET("/user/1")
     fun getUser(): Call<User>
 
-    @POST("/user/{id}/foods")
-    fun addFoodUser(@Path("id") id: Int, @Body mainFood: MainFood): Call<MainFood>
+    @GET("/user/{userId}/foods/{id}")
+    fun getFoodOnUser(@Path("userId") userId: Int, @Path("id") id: Int): Call<MainFood>
 
-    @PUT("/user/{idUser}/foods/{id}")
-    fun getUpdateFood(@Path("idUser") idUser: Int,@Path("id") id: Int, @Body mainFood: MainFood): Call<MainFood>
+    @POST("/user/{userId}/foods")
+    fun addFoodUser(@Path("userId") userId: Int, @Body mainFood: MainFood): Call<MainFood>
 
-    @DELETE("/user/{idUser}/foods/{id}")
-    fun deleteFood(@Path("idUser") idUser: Int, @Path("id") id: Int): Call<ResponseBody>
+    @PUT("/user/{userId}/foods/{id}")
+    fun getUpdateFood(@Path("userId") userId: Int, @Path("id") id: Int, @Body mainFood: MainFood): Call<MainFood>
+
+    @DELETE("/user/{userId}/foods/{id}")
+    fun deleteFood(@Path("userId") userId: Int, @Path("id") id: Int): Call<ResponseBody>
 }

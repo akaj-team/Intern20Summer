@@ -22,7 +22,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class ShoppingCartFragment : Fragment() {
     private lateinit var user: User
     private var listMainFood: ArrayList<MainFood> = arrayListOf()
@@ -52,8 +51,8 @@ class ShoppingCartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         arguments?.let {
-            listMainFood = it.getParcelableArrayList<MainFood>(LIST_FOOD)
-            user = it.getParcelable(USER)
+            listMainFood = it.getParcelableArrayList<MainFood>(LIST_FOOD) as ArrayList<MainFood>
+            user = it.getParcelable(USER) as User
         }
         return inflater.inflate(R.layout.fragment_shopping_cart, container, false)
     }
@@ -68,7 +67,6 @@ class ShoppingCartFragment : Fragment() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             cartAdapter = CartAdapter(listMainFood)
             adapter = cartAdapter
-            totalProduct()
             cartAdapter?.onUpdateClick = {
                 dialogGetNumber(it)
                 cartAdapter?.notifyDataSetChanged()
@@ -76,8 +74,9 @@ class ShoppingCartFragment : Fragment() {
             }
             cartAdapter?.onDeleteClick = {
                 deleteFoodOnCart(it)
-//                totalProduct()
+                totalProduct()
             }
+            totalProduct()
         }
     }
 
@@ -85,14 +84,16 @@ class ShoppingCartFragment : Fragment() {
         val call: Call<ResponseBody>? = service?.deleteFood(1, listMainFood[position].id)
         call?.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d("TAG11", t.message)
+                Log.d("BBB", t.message)
             }
 
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     listMainFood.removeAt(position)
                     cartAdapter?.notifyItemRemoved(position)
-//                    totalProduct()
+                    Log.d("BBB", "aaa")
+                } else {
+                    Log.d("BBB", "dddd")
                 }
             }
         })
@@ -136,13 +137,8 @@ class ShoppingCartFragment : Fragment() {
     private fun totalProduct() {
         var total = 0.0
         listMainFood.forEach {
-            if (it.id == 0){
-                total = 0.0
-            }
-            else{
-                total += it.price * (it.quantum?.toDouble() ?: 0.0)
-                Log.d("TAG11", "$total")
-            }
+            total += it.price * (it.quantum?.toDouble() ?: 0.0)
+            Log.d("TAG11", "$total")
         }
         tvTotalPrice.text = "Total: $total$"
     }
